@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import gc
 from cmath import *
 from heatbath import *
 
@@ -54,12 +55,12 @@ class bathensemble():
             omega_min=self.N**(-1.0)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
             omega_max=omega_min*self.N**1.2
 
-        omega =   np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
+        omega =np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
 
         masses = self.computeMasses(omega)
         k=np.multiply(masses,np.power(omega,2)) # compute spring constants
-        fig=plt.figure(3)
-        plt.hist(k,200)
+        #fig=plt.figure(3)
+        #plt.hist(k,200)
 
         #generate starting positions/impulses for oscillators
         q0 = self.Q0 + np.power(self.beta,-0.5)*np.multiply(np.power(k,-0.5),np.random.standard_normal(self.N))
@@ -74,6 +75,7 @@ class bathensemble():
         for i in range(0,self.timesteps.size):
             self.singleBathK_N[i]= np.sum(np.multiply(k,np.cos(omega*self.timesteps[i])))
         self.singleBathK_N *= 1.0/np.sum(self.singleBathK_N)
+        gc.collect()
 
 
     def averageEnsemble(self):
@@ -97,6 +99,8 @@ class bathensemble():
 
             if self.maxMomentumError<self.singleBath.maxMomentumError:
                 self.maxMomentumError=self.singleBath.maxMomentumError
+
+            gc.collect()
 
         self.varQ = self.squaredQ - np.power(self.aveQ,2)
         self.varP = self.squaredP - np.power(self.aveP,2)
