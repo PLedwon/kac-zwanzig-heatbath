@@ -48,8 +48,8 @@ class bathensemble():
         #generate characteristic frequencies from a uniform distribution
 
         if self.diffType == 'sub':
-            omega_min=self.N**(-1.0)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
-            omega_max=omega_min*self.N**1.2
+            omega_min=self.N**(-0.8)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
+            omega_max=omega_min*self.N**1.1
 
         if self.diffType == 'super':
             omega_min=self.N**(-1.0)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
