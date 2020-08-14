@@ -31,7 +31,6 @@ class heatbath():
 
         runHeatbath(self)
 
-
 ##########################################################
 #    def hamiltonEOM(self,y,t):
 #
@@ -51,11 +50,10 @@ class heatbath():
 ###########################################################
 
 #symplectic euler version
-
     def solve_ivp(self):
 
-        self.q=np.zeros((self.N,len(self.timesteps)))
-        self.p=np.zeros((self.N,len(self.timesteps)))
+        self.q=np.zeros((self.N,2))
+        self.p=np.zeros((self.N,2))
         self.Q=np.zeros(len(self.timesteps))
         self.P=np.zeros(len(self.timesteps))
 
@@ -63,37 +61,33 @@ class heatbath():
         self.p[:,0]=self.y0[self.N+2:2*self.N+2]
         self.Q[0]=self.y0[0]
         self.P[0]=self.y0[1]
+
+        self.energyError[0]=self.initialEnergy
         #self.energyE
     #semi-implicit Euler-scheme, might be replaced by an other integrator
     #impulses get updated first
         for i in range(0,len(self.timesteps)-1): #Hamilton eom in the euler scheme
-            self.p[:,i+1] = self.p[:,i] - np.multiply(self.k,self.q[:,i]-self.Q[i]) *self.dt
-            self.P[i+1]   = self.P[i]   + np.inner(self.k,self.q[:,i]-self.Q[i])    *self.dt
+            self.p[:,1] = self.p[:,0] - np.multiply(self.k,self.q[:,0]-self.Q[i]) *self.dt
+            self.P[i+1]   = self.P[i]   + np.inner(self.k,self.q[:,0]-self.Q[i])    *self.dt
             self.Q[i+1]   = self.Q[i]   + self.P[i+1]                               *self.dt
-            self.q[:,i+1] = self.q[:,i] + np.multiply(self.p[:,i+1],self.invm)      *self.dt
+            self.q[:,1] = self.q[:,0] + np.multiply(self.p[:,1],self.invm)      *self.dt
 
+            #energies and momentum errors
+            self.energyError[i] = 0.5*(self.invM*np.power(self.P[i],2)+ np.inner(self.invm,np.power(self.p[:,0],2)) +  np.inner(self.k,np.power((self.q[:,0]-self.Q[i]),2)))
+            self.momentum[i] = np.sum(self.p[:,0])
 
-
-
+            self.p[:,0]=self.p[:,1]
+            self.q[:,0]=self.q[:,1]
 ##############################################
 
     def checkEnergy(self): # error of the energy for every timestep
-        self.energyError[0]=self.initialEnergy
-        for i in range(1,len(self.timesteps)):
-            self.energyError[i] = 0.5*(self.invM*np.power(self.P[i],2)+ np.inner(self.invm,np.power(self.p[:,i],2)) +  np.inner(self.k,np.power((self.q[:,i]-self.Q[i]),2)))
         self.energyError = np.reciprocal(self.initialEnergy)*np.abs(self.energyError-self.initialEnergy)
         self.maxEnergyError=np.max(self.energyError)
         self.avgEnergyError=np.average(self.energyError)
-#        print('avgEnergyError = ' + str(math.ceil(self.avgEnergyError*1000.0)/10.0) + ' %' )
         gc.collect()
 
     def checkMomentum(self):
-
-        mom = np.zeros(len(self.timesteps))
-        for i in range(1,len(self.timesteps)):
-            mom[i]=np.sum(self.p[:,i])
-
-        self.momentumError=np.abs(self.P+mom-self.P[0]-np.sum(self.p[:,0]))#/(self.P[0]-np.sum(self.p[0,:]))
+        self.momentumError=np.abs(self.P+self.momentum-self.P[0]-self.momentum[0])#/(self.P[0]-np.sum(self.p[0,:]))
         self.momentumError[0]=0
         self.maxMomentumError=np.max(self.momentumError)
         gc.collect()

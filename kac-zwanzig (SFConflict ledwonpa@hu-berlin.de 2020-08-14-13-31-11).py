@@ -10,7 +10,7 @@ import scipy
 ########################################################################################################################
 #set parameters
 n=1#ensemble of baths that we average over
-N=20000 #number of bath oscillators
+N=2000 #number of bath oscillators
 beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
 P0=0.0
@@ -21,7 +21,7 @@ t0=0.1
 t1=1000.0
 dt=0.1#5.0/float(N)#(t1-t0)/100.0
 
-gamma=0.4
+gamma=0.6
 
 if gamma>1.0:
     diffType='super'
