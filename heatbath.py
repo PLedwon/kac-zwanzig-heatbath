@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import gc
 from cmath import *
 from scipy.integrate import odeint
 
@@ -84,6 +85,7 @@ class heatbath():
         self.maxEnergyError=np.max(self.energyError)
         self.avgEnergyError=np.average(self.energyError)
 #        print('avgEnergyError = ' + str(math.ceil(self.avgEnergyError*1000.0)/10.0) + ' %' )
+        gc.collect()
 
     def checkMomentum(self):
 
@@ -94,3 +96,4 @@ class heatbath():
         self.momentumError=np.abs(self.P+mom-self.P[0]-np.sum(self.p[:,0]))#/(self.P[0]-np.sum(self.p[0,:]))
         self.momentumError[0]=0
         self.maxMomentumError=np.max(self.momentumError)
+        gc.collect()
