@@ -10,18 +10,18 @@ import scipy
 ########################################################################################################################
 #set parameters
 n=1#ensemble of baths that we average over
-N=8000 #number of bath oscillators
+N=500 #number of bath oscillators
 beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
 P0=0.0
 oscMass=1.0 #1.0 #mass of heaviest bath oscillator
-M=0.01# mass of the distinguished particle
+M=0.1# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
 t1=1000.0
-dt=0.0002#3.0/float(N)#(t1-t0)/100.0
+dt=0.001#2.2/float(N)#(t1-t0)/100.0
 
-gamma=1.3
+gamma=0.6
 
 if gamma>1.0:
     diffType='super'
@@ -59,11 +59,11 @@ def theoDiff(times,gamma):
         return np.power(times,gamma) * ensemble1.varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],gamma)
 
 
-startindex = math.floor((t1/dt)*0.2)
+startindex = math.floor((t1/dt)*0.1)
 const = ensemble1.varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],gamma)
 const_control = ensemble1.varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
 plt.figure(1)
-plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,1.0)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
+plt.plot(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,1.0)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
 #plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,const,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)])#,theoDiff(ensemble1.timesteps,const,1.4)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
 #plt.hist(ensemble.singleBath.q[0,:],1000)
 plt.xlabel('t')
