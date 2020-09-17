@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import gc
 from cmath import *
 from heatbath import *
 
@@ -48,14 +47,15 @@ class bathensemble():
         #generate characteristic frequencies from a uniform distribution
 
         if self.diffType == 'sub':
-            omega_min=self.N**(-0.8)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
-            omega_max=omega_min*self.N**1.1
+            omega_min=self.N**(-1.0)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
+            omega_max=omega_min*self.N**1.66
 
         if self.diffType == 'super':
-            omega_min=self.N**(-1.0)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
-            omega_max=omega_min*self.N**1.2
+            omega_min=self.N**(-1.3)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
+            omega_max=omega_min*self.N**1.5
 
-        omega =np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
+        #omega =np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
+        omega =np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
 
         masses = self.computeMasses(omega)
         k=np.multiply(masses,np.power(omega,2)) # compute spring constants
@@ -75,7 +75,6 @@ class bathensemble():
         for i in range(0,self.timesteps.size):
             self.singleBathK_N[i]= np.sum(np.multiply(k,np.cos(omega*self.timesteps[i])))
         self.singleBathK_N *= 1.0/np.sum(self.singleBathK_N)
-        gc.collect()
 
 
     def averageEnsemble(self):
@@ -100,10 +99,14 @@ class bathensemble():
             if self.maxMomentumError<self.singleBath.maxMomentumError:
                 self.maxMomentumError=self.singleBath.maxMomentumError
 
-            gc.collect()
 
         self.varQ = self.squaredQ - np.power(self.aveQ,2)
         self.varP = self.squaredP - np.power(self.aveP,2)
-        print('max energy error = ' + str(math.ceil(self.maxEnergyError*1000.0)/10.0) + '%' )
-        print('avg energy error = ' + str(math.ceil(self.avgEnergyError*1000.0)/10.0) + '%' )
-        print('max momentum error: ' + str(self.maxMomentumError))
+        #print('max energy error = ' + str(math.ceil(self.maxEnergyError*10000.0)/100.0) + '%' )
+        #print('avg energy error = ' + str(math.ceil(self.avgEnergyError*10000.0)/100.0) + '%' )
+        #print('max momentum error: ' + str(self.maxMomentumError))
+        print('max energy error =' )
+        print(self.maxEnergyError)
+        print('avg energy error = ' )
+        print(self.avgEnergyError)
+        print(self.maxMomentumError)

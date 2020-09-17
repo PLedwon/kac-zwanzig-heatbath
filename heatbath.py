@@ -1,6 +1,5 @@
 import numpy as np
 import math
-import gc
 from cmath import *
 from scipy.integrate import odeint
 
@@ -20,7 +19,7 @@ class heatbath():
         self.dt=dt
         self.timesteps=np.arange(self.t0,self.t1,self.dt)
         self.initialEnergy = 0.5*(self.invM*np.power(self.y0[0],2)+np.inner(self.invm,np.power(self.y0[self.N+2:2*self.N+2],2)) +  np.inner(self.k,np.power((self.y0[2:self.N+2]-self.y0[0]),2)))     # Initial energy of the system
-        self.energyError = np.zeros(len(self.timesteps))
+        self.energy= np.zeros(len(self.timesteps))
         self.momentum = np.zeros(len(self.timesteps))
         self.dydt=np.zeros(2*self.N+2)
 
@@ -62,7 +61,8 @@ class heatbath():
         self.Q[0]=self.y0[0]
         self.P[0]=self.y0[1]
 
-        self.energyError[0]=self.initialEnergy
+        self.energy[0]=self.initialEnergy
+        self.momentum[0]=np.sum(self.p[:,0])+self.P[0]
         #self.energyE
     #semi-implicit Euler-scheme, might be replaced by an other integrator
     #impulses get updated first
@@ -73,21 +73,19 @@ class heatbath():
             self.q[:,1] = self.q[:,0] + np.multiply(self.p[:,1],self.invm)      *self.dt
 
             #energies and momentum errors
-            self.energyError[i] = 0.5*(self.invM*np.power(self.P[i],2)+ np.inner(self.invm,np.power(self.p[:,0],2)) +  np.inner(self.k,np.power((self.q[:,0]-self.Q[i]),2)))
-            self.momentum[i] = np.sum(self.p[:,0])
+            self.energy[i+1] = 0.5*(self.invM*np.power(self.P[i],2)+ np.inner(self.invm,np.power(self.p[:,0],2)) +  np.inner(self.k,np.power((self.q[:,0]-self.Q[i]),2)))
+            self.momentum[i+1] = np.sum(self.p[:,0]) + self.P[i]
 
             self.p[:,0]=self.p[:,1]
             self.q[:,0]=self.q[:,1]
+
 ##############################################
 
     def checkEnergy(self): # error of the energy for every timestep
-        self.energyError = np.reciprocal(self.initialEnergy)*np.abs(self.energyError-self.initialEnergy)
+        self.energyError = np.reciprocal(self.initialEnergy)*np.abs(self.energy-self.initialEnergy)
         self.maxEnergyError=np.max(self.energyError)
         self.avgEnergyError=np.average(self.energyError)
-        gc.collect()
 
     def checkMomentum(self):
-        self.momentumError=np.abs(self.P+self.momentum-self.P[0]-self.momentum[0])#/(self.P[0]-np.sum(self.p[0,:]))
-        self.momentumError[0]=0
+        self.momentumError=np.abs(self.momentum-self.momentum[0])#/(self.P[0]-np.sum(self.p[0,:]))
         self.maxMomentumError=np.max(self.momentumError)
-        gc.collect()
