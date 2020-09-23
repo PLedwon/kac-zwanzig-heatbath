@@ -9,7 +9,7 @@ import scipy
 
 ########################################################################################################################
 #set parameters
-n=1#ensemble of baths that we average over
+n=5#ensemble of baths that we average over
 N=8000 #number of bath oscillators
 beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
@@ -19,7 +19,8 @@ M=0.01# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
 t1=1000.0
-dt=0.0002#3.0/float(N)#(t1-t0)/100.0
+dt=0.0005#3.0/float(N)#(t1-t0)/100.0
+
 
 gamma=1.3
 
@@ -59,33 +60,33 @@ def theoDiff(times,gamma):
         return np.power(times,gamma) * ensemble1.varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],gamma)
 
 
-startindex = math.floor((t1/dt)*0.2)
-const = ensemble1.varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],gamma)
-const_control = ensemble1.varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
-plt.figure(1)
-plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,1.0)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
-#plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,const,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)])#,theoDiff(ensemble1.timesteps,const,1.4)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
-#plt.hist(ensemble.singleBath.q[0,:],1000)
-plt.xlabel('t')
-plt.ylabel('Var(Q)')
-
-
-plt.figure(2)
-plt.plot(ensemble1.timesteps,ensemble1.K,ensemble1.timesteps,memoryKernel(ensemble1.timesteps))
-#plt.hist(ensemble.singleBath.q[0,:],1000)
-plt.xlabel('t')
-plt.ylabel('Memory Kernel')
-
-plt.figure(3)
-plt.plot(ensemble1.timesteps,ensemble1.singleBath.Q)
-
-plt.figure(4)
-plt.plot(ensemble1.timesteps,ensemble1.singleBath.energy)
-
-plt.figure(5)
-plt.plot(ensemble1.timesteps,ensemble1.singleBath.momentum)
-
-plt.show()
+#startindex = math.floor((t1/dt)*0.2)
+#const = ensemble1.varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],gamma)
+#const_control = ensemble1.varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
+#plt.figure(1)
+#plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,1.0)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
+##plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,const,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)])#,theoDiff(ensemble1.timesteps,const,1.4)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
+##plt.hist(ensemble.singleBath.q[0,:],1000)
+#plt.xlabel('t')
+#plt.ylabel('Var(Q)')
+#
+#
+#plt.figure(2)
+#plt.plot(ensemble1.timesteps,ensemble1.K,ensemble1.timesteps,memoryKernel(ensemble1.timesteps))
+##plt.hist(ensemble.singleBath.q[0,:],1000)
+#plt.xlabel('t')
+#plt.ylabel('Memory Kernel')
+#
+#plt.figure(3)
+#plt.plot(ensemble1.timesteps,ensemble1.singleBath.Q)
+#
+#plt.figure(4)
+#plt.plot(ensemble1.timesteps,ensemble1.singleBath.energy)
+#
+#plt.figure(5)
+#plt.plot(ensemble1.timesteps,ensemble1.singleBath.momentum)
+#
+#plt.show()
 
 
 
