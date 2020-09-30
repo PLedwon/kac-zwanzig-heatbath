@@ -18,7 +18,7 @@ oscMass=1.0 #1.0 #mass of heaviest bath oscillator
 M=0.01# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
-t1=1000.0
+t1=3000.0
 dt=0.0005#3.0/float(N)#(t1-t0)/100.0
 
 
