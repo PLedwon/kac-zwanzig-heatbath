@@ -24,10 +24,11 @@ for file in resultList:
     K    += results['K']
 
 K*=1.0/np.sum(K)
-parallelizedn = 6
-norm=1.0/float(parallelizedn)
+#parallelizedn = 6
+norm=1.0/float(len(results))
 varQ *= norm
 varP *= norm
+
 
 if gamma>1.0:
     diffType='super'
@@ -53,19 +54,20 @@ def theoDiff(times,gamma):
 startindex = math.floor((t1/dt)*0.2)
 const = varQ[math.floor((t1/dt)*0.3)]/np.power(timesteps[math.floor((t1/dt)*0.3)],gamma)
 #const_control = varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
-plt.figure(1)
+var = plt.figure(1)
 plt.plot(timesteps,varQ,timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(timesteps,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
 #plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,const,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)])#,theoDiff(ensemble1.timesteps,const,1.4)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
 #plt.hist(ensemble.singleBath.q[0,:],1000)
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
+var.savefig("varQ.pdf",bbox_inches='tight')
 
 
-plt.figure(2)
-plt.plot(timesteps,K,timesteps,memoryKernel(timesteps))
-#plt.hist(ensemble.singleBath.q[0,:],1000)
+K = plt.figure(2)
+plt.plot(timesteps,memoryKernel(timesteps))
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
+K.savefig("K.pdf",bbox_inches='tight')
 
 #plt.figure(3)
 #plt.plot(timesteps,ensemble1.singleBath.Q)
@@ -76,4 +78,4 @@ plt.ylabel('Memory Kernel')
 #plt.figure(5)
 #plt.plot(ensemble1.timesteps,ensemble1.singleBath.momentum)
 
-plt.show()
+#plt.show()
