@@ -102,7 +102,7 @@ plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 kern.savefig("MemoryKernel.pdf")
 
-#plt.figure(2)
-#plt.matshow(kernelDiff);
-#plt.colorbar()
-#plt.show()
+mat = plt.figure(2)
+plt.matshow(kernelDiff);
+plt.colorbar()
+mat.savefig("mat.pdf")
