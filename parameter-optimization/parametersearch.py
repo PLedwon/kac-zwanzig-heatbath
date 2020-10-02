@@ -15,15 +15,16 @@ oscMass=1.0 #1.0 #mass of heaviest bath oscillator
 M=1.0# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
-t1=80.0
-dt=0.05#1.0/float(N)#(t1-t0)/100.0
+t1=1000.0
+dt=0.5#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(t0,t1,dt)
 lowerNRange =np.arange(-1.9,-1.0,0.10)
 upperNRange =np.arange(0.6,2.0,0.10)
-kernelDiff = 100*np.ones((len(lowerNRange),len(upperNRange)))
+cutoff = 10000
+kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
-gamma=1.3
+gamma=1.6
 
 if gamma>1.0:
     diffType='super'
@@ -80,9 +81,9 @@ for i in range(0,len(lowerNRange)-1):
             masses = computeMasses(omega)
             k=np.multiply(masses,np.power(omega,2)) # compute spring constants
             K = computeKernel(timesteps,k,omega)
-            kernelDiff[i,j] = np.sum(np.abs(K-realK))
-            if kernelDiff[i,j] > 100.0:
-                kernelDiff[i,j] =100.0
+            kernelDiff[i,j] = np.sum(np.abs(K-realK))/np.sum(realK)
+            if kernelDiff[i,j] > cutoff:
+                kernelDiff[i,j] =cutoff
 
 ind = np.unravel_index(np.argmin(kernelDiff, axis=None), kernelDiff.shape)
 print(kernelDiff[ind])
@@ -99,7 +100,7 @@ kern = plt.figure(1)
 plt.plot(timesteps,K,timesteps,realK)
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
-kern.saveplot(MemoryKernel.pdf)
+kern.savefig("MemoryKernel.pdf")
 
 #plt.figure(2)
 #plt.matshow(kernelDiff);
