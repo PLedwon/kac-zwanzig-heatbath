@@ -61,14 +61,14 @@ plt.loglog(timesteps,varQ,timesteps[startindex:endindex],theoDiff(timesteps,gamm
 #plt.hist(ensemble.singleBath.q[0,:],1000)
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
-var.savefig("varQ.pdf",bbox_inches='tight')
+var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 
 Kernel = plt.figure(2)
 plt.plot(timesteps,memoryKernel(timesteps),timesteps,K)
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
-Kernel.savefig("K.pdf",bbox_inches='tight')
+Kernel.savefig("./img/K.pdf",bbox_inches='tight')
 
 #plt.figure(3)
 #plt.plot(timesteps,ensemble1.singleBath.Q)
