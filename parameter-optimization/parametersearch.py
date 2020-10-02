@@ -24,7 +24,7 @@ upperNRange =np.arange(0.6,2.0,0.10)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
-gamma=1.6
+gamma=1.3
 
 if gamma>1.0:
     diffType='super'
@@ -103,6 +103,6 @@ plt.ylabel('Memory Kernel')
 kern.savefig("MemoryKernel.pdf")
 
 mat = plt.figure(2)
-plt.matshow(kernelDiff);
+plt.matshow(kernelDiff)
 plt.colorbar()
 mat.savefig("mat.pdf")
