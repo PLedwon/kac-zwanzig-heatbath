@@ -24,7 +24,7 @@ upperNRange =np.arange(0.9,1.5,0.10)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
-gamma=1.6
+gamma=1.5
 
 if gamma>1.0:
     diffType='super'
