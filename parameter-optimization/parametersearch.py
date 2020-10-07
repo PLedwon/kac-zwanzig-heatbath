@@ -7,7 +7,7 @@ import scipy.special
 
 ########################################################################################################################
 #set parameters
-N=8000 #number of bath oscillators
+N=16000 #number of bath oscillators
 beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
 P0=0.0
@@ -15,16 +15,16 @@ oscMass=1.0 #1.0 #mass of heaviest bath oscillator
 M=1.0# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
-t1=500.0
+t1=200.0
 dt=0.05#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(t0,t1,dt)
-lowerNRange =np.arange(-1.9,-1.0,0.10)
+lowerNRange =np.arange(-1.8,-0.8,0.10)
 upperNRange =np.arange(0.6,2.0,0.10)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
-gamma=1.3
+gamma=1.5
 
 if gamma>1.0:
     diffType='super'
@@ -83,7 +83,7 @@ for i in range(0,len(lowerNRange)-1):
             K = computeKernel(timesteps,k,omega)
             kernelDiff[i,j] = np.sum(np.abs(K-realK))/np.sum(realK)
             if kernelDiff[i,j] > cutoff:
-                kernelDiff[i,j] =cutoff
+                    kernelDiff[i,j] =cutoff
 
 ind = np.unravel_index(np.argmin(kernelDiff, axis=None), kernelDiff.shape)
 print(kernelDiff[ind])
@@ -93,6 +93,7 @@ print(lowerNRange[ind[0]],upperNRange[ind[1]])
 omega_min, omega_max = setFrequencyRange(lowerNRange[ind[0]],upperNRange[ind[1]])
 omega =np.linspace(omega_min,omega_max,num=N)
 masses = computeMasses(omega)
+#timesteps=np.arange(0,1000,0.5)
 k=np.multiply(masses,np.power(omega,2)) # compute spring constants
 K = computeKernel(timesteps,k,omega)
 
@@ -100,9 +101,10 @@ kern = plt.figure(1)
 plt.plot(timesteps,K,timesteps,realK)
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
-kern.savefig("MemoryKernel.pdf")
+#kern.savefig("MemoryKernel.pdf")
 
 mat = plt.figure(2)
 plt.matshow(kernelDiff)
 plt.colorbar()
-mat.savefig("mat.pdf")
+#mat.savefig("mat.pdf")
+plt.show()
