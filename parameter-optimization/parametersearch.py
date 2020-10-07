@@ -81,7 +81,7 @@ for i in range(0,len(lowerNRange)-1):
             masses = computeMasses(omega)
             k=np.multiply(masses,np.power(omega,2)) # compute spring constants
             K = computeKernel(timesteps,k,omega)
-            kernelDiff[i,j] = np.sum(np.abs(K-realK))/np.sum(realK)
+            kernelDiff[i,j] = dt*np.sum(np.abs(K-realK))/np.sum(realK)
             if kernelDiff[i,j] > cutoff:
                     kernelDiff[i,j] =cutoff
 
