@@ -15,7 +15,7 @@ oscMass=1.0 #1.0 #mass of heaviest bath oscillator
 M=1.0# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
-t1=200.0
+t1=300.0
 dt=0.05#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(t0,t1,dt)
@@ -101,10 +101,10 @@ kern = plt.figure(1)
 plt.plot(timesteps,K,timesteps,realK)
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
-#kern.savefig("MemoryKernel.pdf")
+kern.savefig("MemoryKernel.pdf")
 
 mat = plt.figure(2)
 plt.matshow(kernelDiff)
 plt.colorbar()
-#mat.savefig("mat.pdf")
-plt.show()
+mat.savefig("mat.pdf")
+#plt.show()
