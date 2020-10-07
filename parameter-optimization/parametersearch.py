@@ -16,7 +16,7 @@ M=1.0# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
 t1=100.0
-dt=2.5#1.0/float(N)#(t1-t0)/100.0
+dt=1.0#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(t0,t1,dt)
 lowerNRange =np.arange(-1.1,-0.8,0.02)
@@ -81,7 +81,7 @@ for i in range(0,len(lowerNRange)-1):
             masses = computeMasses(omega)
             k=np.multiply(masses,np.power(omega,2)) # compute spring constants
             K = computeKernel(timesteps,k,omega)
-            kernelDiff[i,j] = dt*np.sum(np.abs(K-realK))/np.sum(realK)
+            kernelDiff[i,j] = dt*np.sum(np.abs(K-realK))/np.sum(realK)/t1
             if kernelDiff[i,j] > cutoff:
                     kernelDiff[i,j] =cutoff
 
