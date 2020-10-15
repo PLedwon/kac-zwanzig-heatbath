@@ -51,7 +51,7 @@ def theoDiff(times,gamma):
 
 
 
-startindex = int(math.floor((t1/dt)*0.15))
+startindex = int(math.floor((t1/dt)*0.25))
 endindex = int(math.floor(t1/dt))
 const = varQ[startindex]/np.power(timesteps[startindex],gamma)
 #const_control = varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
