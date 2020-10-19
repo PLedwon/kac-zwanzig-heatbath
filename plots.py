@@ -17,20 +17,22 @@ t1=data['t1']
 dt=data['dt']
 gamma=data['gamma']
 maxEError=0
+errorFiles=0
 
 for file in resultList:
     results = np.load(file)
-    varQ += results['squaredQ'] - results['aveQ'] #have to normalize
-    varP += results['squaredP'] - results['aveP']
-    K    += results['K']
-    print(results['maxEnergyError'])
-    if results['maxEnergyError']>maxEError:
-       maxEError = results['maxEnergyError']
+    if results['maxEnergyError']>0.1:
+        errorFiles+=1
+    
+    else:
+        varQ += results['squaredQ'] - results['aveQ'] #have to normalize
+        varP += results['squaredP'] - results['aveP']
+        K    += results['K']
+        print(results['maxEnergyError'])
 
-print(maxEError)
 K*=1.0/np.sum(K)
 #parallelizedn = 6
-norm=1.0/float(len(results))
+norm=1.0/(float(len(results))-errorFiles)
 varQ *= norm
 varP *= norm
 
@@ -58,12 +60,12 @@ def theoDiff(times,gamma):
 
 startindex = int(math.floor((t1/dt)*0.10))
 endindex = int(math.floor(t1/dt))
-mid = int((endindex-startindex/2))
+mid = int(2*startindex)
 
 const = varQ[mid]/np.power(timesteps[mid],gamma)
 #const_control = varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
 var = plt.figure(1)
-plt.loglog(timesteps[startindex:endindex:160000],varQ[startindex:endindex:160000],'.',timesteps[startindex:endindex:160000],theoDiff(timesteps,gamma)[startindex:endindex:160000])
+plt.loglog(timesteps[startindex:endindex:160000],varQ[startindex:endindex:160000],':',timesteps[startindex:endindex:160000],theoDiff(timesteps,gamma)[startindex:endindex:160000])
 #plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,const,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)])#,theoDiff(ensemble1.timesteps,const,1.4)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
 #plt.hist(ensemble.singleBath.q[0,:],1000)
 plt.xlabel('t')
@@ -72,7 +74,7 @@ var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 
 Kernel = plt.figure(2)
-plt.plot(timesteps[::160000],memoryKernel(timesteps)[::160000],timesteps[::160000],K[::160000],'.')
+plt.plot(timesteps[::16000],memoryKernel(timesteps)[::16000],timesteps[::1600],K[::1600],'.')
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 Kernel.savefig("./img/K.pdf",bbox_inches='tight')
