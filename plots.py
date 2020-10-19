@@ -16,13 +16,17 @@ timesteps=data['timesteps']
 t1=data['t1']
 dt=data['dt']
 gamma=data['gamma']
+maxEError=0
 
 for file in resultList:
     results = np.load(file)
     varQ += results['squaredQ'] - results['aveQ'] #have to normalize
     varP += results['squaredP'] - results['aveP']
     K    += results['K']
+    if results['maxEnergyError']>maxEError:
+       maxEError = results['maxEnergyError']
 
+print(maxEError)
 K*=1.0/np.sum(K)
 #parallelizedn = 6
 norm=1.0/float(len(results))
