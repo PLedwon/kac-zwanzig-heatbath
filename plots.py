@@ -58,7 +58,7 @@ def theoDiff(times,gamma):
 
 
 
-startindex = int(math.floor((t1/dt)*0.20))
+startindex = int(math.floor((t1/dt)*0.30))
 endindex = int(math.floor(t1/dt))
 mid = int(0.5*(endindex-startindex))
 
