@@ -54,7 +54,7 @@ def memoryKernel(times):
         return result
 
 def theoDiff(times, gamma, fitindex):
-        return np.power(times,gamma) * varQ[startindex]/np.power(timesteps[startindex],gamma)
+        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
 
 
 
@@ -65,7 +65,7 @@ fitindex = int(endindex*0.95)
 #const = varQ[mid]/np.power(timesteps[mid],gamma)
 #const_control = varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
 var = plt.figure(1)
-plt.loglog(timesteps[startindex:endindex:16000],varQ[startindex:endindex:16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
+plt.plot(timesteps[startindex:endindex:16000],varQ[startindex:endindex:16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
 #plt.loglog(ensemble1.timesteps,ensemble1.varQ,ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)],theoDiff(ensemble1.timesteps,const,gamma)[math.floor((t1/dt)*0.1):math.floor(t1/dt)],ensemble1.timesteps[math.floor((t1/dt)*0.1):math.floor(t1/dt)])#,theoDiff(ensemble1.timesteps,const,1.4)[math.floor((t1/dt)*0.1):math.floor(t1/dt)])
 #plt.hist(ensemble.singleBath.q[0,:],1000)
 plt.xlabel('t')
