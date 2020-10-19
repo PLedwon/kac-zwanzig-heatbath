@@ -51,9 +51,11 @@ def theoDiff(times,gamma):
 
 
 
-startindex = int(math.floor((t1/dt)*0.30))
+startindex = int(math.floor((t1/dt)*0.20))
 endindex = int(math.floor(t1/dt))
-const = varQ[startindex]/np.power(timesteps[startindex],gamma)
+mid = int((endindex-startindex/2))
+
+const = varQ[mid]/np.power(timesteps[mid],gamma)
 #const_control = varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
 var = plt.figure(1)
 plt.loglog(timesteps,varQ,timesteps[startindex:endindex],theoDiff(timesteps,gamma)[startindex:endindex])
