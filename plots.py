@@ -61,16 +61,22 @@ def memoryKernel(times):
 def theoDiff(x,a,c):
     return a*np.power(x,gamma)+c
 
+def linDiff(x,a,c):
+    return a*x+c
+
 
 startindex = int(math.floor((t1/dt)*0.10))
 endindex = int(math.floor(t1/dt)*0.7)
+linindex = int(math.floor(t1/dt)*0.8)
 #fitindex = int(math.floor((t1/dt)*0.2))
 popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:2000],varQ[startindex:endindex:2000])    
+linpopt, linpcov = curve_fit(linDiff, timesteps[endindex::2000],varQ[endindex::2000])    
 print(popt)
 
 var = plt.figure(1)
 plt.loglog(timesteps[startindex:endindex:8000],varQ[startindex:endindex:8000],label='Numerical results')
 plt.loglog(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),label=r'$\propto t^{1.5}$')
+plt.loglog(timesteps[linindex::8000],linDiff(timesteps[linindex::8000],linpopt[0],linpopt[1]),label='linear Diffusion')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 plt.legend()
@@ -80,6 +86,7 @@ var = plt.figure(2)
 plt.plot(timesteps[::8000],varQ[::8000],label='Numerical results')
 #plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:8000],label=r'$\propto t^{1.5}$')
 plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),label=r'$\propto t^{1.5}$')
+plt.plot(timesteps[linindex::8000],linDiff(timesteps[linindex::8000],linpopt[0],linpopt[1]),label='linear Diffusion')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 plt.legend()
