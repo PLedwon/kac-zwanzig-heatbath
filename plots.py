@@ -57,8 +57,8 @@ def memoryKernel(times):
 #def theoDiff(times, gamma, fitindex):
 #        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
 
-def theoDiff(x,a,exp,c):
-    return a*np.power(x,exp)+c
+def theoDiff(x,a,c):
+    return a*np.power(x,gamma)+c
 
 
 startindex = int(math.floor((t1/dt)*0.10))
@@ -69,7 +69,7 @@ print(popt)
 
 var = plt.figure(1)
 plt.loglog(timesteps[startindex:endindex:8000],varQ[startindex:endindex:8000],label='Numerical results')
-plt.loglog(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1],popt[2]),label=r'$\propto t^{1.5}$')
+plt.loglog(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),label=r'$\propto t^{1.5}$')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 plt.legend()
@@ -78,7 +78,7 @@ var.savefig("./img/varQlog.pdf",bbox_inches='tight')
 var = plt.figure(2)
 plt.plot(timesteps[::8000],varQ[::8000],label='Numerical results')
 #plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:8000],label=r'$\propto t^{1.5}$')
-plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1],popt[2]),label=r'$\propto t^{1.5}$')
+plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),label=r'$\propto t^{1.5}$')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 plt.legend()
