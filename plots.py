@@ -58,7 +58,7 @@ def theoDiff(times, gamma, fitindex):
 
 
 startindex = int(math.floor((t1/dt)*0.10))
-endindex = int(math.floor(t1/dt)*0.9)
+endindex = int(math.floor(t1/dt)*1.0)
 fitindex = int(math.floor((t1/dt)*0.50))
 
 var = plt.figure(1)
