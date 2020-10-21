@@ -23,7 +23,7 @@ errorFiles=0
 
 for file in resultList:
     results = np.load(file)
-    if results['maxEnergyError']>0.08:
+    if results['maxEnergyError']>0.3:
         errorFiles+=1
     
     else:
@@ -62,8 +62,8 @@ def theoDiff(x,a,c):
     return a*np.power(x,gamma)+c
 
 
-startindex = int(math.floor((t1/dt)*0.10))
-endindex = int(math.floor(t1/dt)*0.6)
+startindex = int(math.floor((t1/dt)*0.20))
+endindex = int(math.floor(t1/dt)*0.7)
 #fitindex = int(math.floor((t1/dt)*0.2))
 popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:2000],varQ[startindex:endindex:2000])    
 print(popt)
