@@ -59,12 +59,11 @@ def theoDiff(times, gamma, fitindex):
 
 
 startindex = int(math.floor((t1/dt)*0.10))
-endindex = int(math.floor(t1/dt)*1.0)
+endindex = int(math.floor(t1/dt)*0.85)
 fitindex = int(math.floor((t1/dt)*0.50))
 
 var = plt.figure(1)
 plt.loglog(timesteps[startindex:endindex:16000],varQ[startindex:endindex:16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
-#plt.loglog(timesteps[::16000],varQ[::16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 var.savefig("./img/varQlog.pdf",bbox_inches='tight')
