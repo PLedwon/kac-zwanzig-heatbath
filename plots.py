@@ -73,7 +73,7 @@ var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 
 Kernel = plt.figure(2)
-plt.plot(timesteps[::16000],memoryKernel(timesteps)[::16000],timesteps[::1600],K[::1600],'.')
+plt.loglog(timesteps[::16000],memoryKernel(timesteps)[::16000],timesteps[::1600],K[::1600],'.')
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 Kernel.savefig("./img/K.pdf",bbox_inches='tight')
