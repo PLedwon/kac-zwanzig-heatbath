@@ -64,7 +64,7 @@ fitindex = int(math.floor((t1/dt)*0.2))
 
 var = plt.figure(1)
 plt.loglog(timesteps[startindex:endindex:8000],varQ[startindex:endindex:8000],label='Numerical results')
-plt.loglog(timesteps[startindex:endindex:8000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:8000],label=r'$\propto t^{1.5}')
+plt.loglog(timesteps[startindex:endindex:8000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:8000],label=r'$\propto t^{1.5}$')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 plt.legend()
