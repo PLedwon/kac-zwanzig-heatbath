@@ -62,7 +62,7 @@ def theoDiff(x,a,c):
 
 
 startindex = int(math.floor((t1/dt)*0.10))
-endindex = int(math.floor(t1/dt)*0.7)
+endindex = int(math.floor(t1/dt)*0.9)
 #fitindex = int(math.floor((t1/dt)*0.2))
 popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:8000],varQ[startindex:endindex:8000])    
 print(popt)
