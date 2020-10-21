@@ -23,7 +23,7 @@ errorFiles=0
 
 for file in resultList:
     results = np.load(file)
-    if results['maxEnergyError']>0.4:
+    if results['maxEnergyError']>0.08:
         errorFiles+=1
     
     else:
@@ -34,6 +34,7 @@ for file in resultList:
 
 K*=1.0/np.sum(K)
 norm=1.0/(float(len(results))-errorFiles)
+print(len(results)-errorFiles)
 varQ *= norm
 varP *= norm
 
