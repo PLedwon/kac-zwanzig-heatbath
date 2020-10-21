@@ -60,7 +60,7 @@ def theoDiff(times, gamma, fitindex):
 
 startindex = int(math.floor((t1/dt)*0.10))
 endindex = int(math.floor(t1/dt)*0.7)
-fitindex = int(math.floor((t1/dt)*0.25))
+fitindex = int(math.floor((t1/dt)*0.20))
 
 var = plt.figure(1)
 plt.loglog(timesteps[startindex:endindex:8000],varQ[startindex:endindex:8000],':',timesteps[startindex:endindex:8000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:8000])
