@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import numpy as np
 import glob
 import matplotlib.pyplot as plt
@@ -66,10 +67,15 @@ plt.loglog(timesteps[startindex:endindex:16000],varQ[startindex:endindex:16000],
 #plt.loglog(timesteps[::16000],varQ[::16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
+var.savefig("./img/varQlog.pdf",bbox_inches='tight')
+
+var = plt.figure(2)
+plt.plot(timesteps[::16000],varQ[::16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
+plt.xlabel('t')
+plt.ylabel('Var(Q)')
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
-
-Kernel = plt.figure(2)
+Kernel = plt.figure(3)
 plt.plot(timesteps[::16000],memoryKernel(timesteps)[::16000],timesteps[::1600],K[::1600],'.')
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
