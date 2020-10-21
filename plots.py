@@ -22,7 +22,7 @@ errorFiles=0
 
 for file in resultList:
     results = np.load(file)
-    if results['maxEnergyError']>0.1:
+    if results['maxEnergyError']>0.4:
         errorFiles+=1
     
     else:
