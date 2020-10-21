@@ -62,8 +62,8 @@ def theoDiff(x,a,c):
     return a*np.power(x,gamma)+c
 
 
-startindex = int(math.floor((t1/dt)*0.20))
-endindex = int(math.floor(t1/dt)*0.9)
+startindex = int(math.floor((t1/dt)*0.25))
+endindex = int(math.floor(t1/dt)*0.8)
 #fitindex = int(math.floor((t1/dt)*0.2))
 popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:2000],varQ[startindex:endindex:2000])    
 print(popt)
