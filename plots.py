@@ -31,7 +31,6 @@ for file in resultList:
         print(results['maxEnergyError'])
 
 K*=1.0/np.sum(K)
-#parallelizedn = 6
 norm=1.0/(float(len(results))-errorFiles)
 varQ *= norm
 varP *= norm
@@ -62,11 +61,9 @@ startindex = int(math.floor((t1/dt)*0.50))
 endindex = int(math.floor(t1/dt))
 fitindex = int(math.floor((t1/dt)*0.60))
 
-#const = varQ[mid]/np.power(timesteps[mid],gamma)
-#const_control = varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
 var = plt.figure(1)
-#plt.loglog(timesteps[startindex:endindex:16000],varQ[startindex:endindex:16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
-plt.loglog(timesteps[::16000],varQ[::16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
+plt.loglog(timesteps[startindex:endindex:16000],varQ[startindex:endindex:16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
+#plt.loglog(timesteps[::16000],varQ[::16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
@@ -78,13 +75,5 @@ plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 Kernel.savefig("./img/K.pdf",bbox_inches='tight')
 
-#plt.figure(3)
-#plt.plot(timesteps,ensemble1.singleBath.Q)
-#
-#plt.figure(4)
-#plt.plot(ensemble1.timesteps,ensemble1.singleBath.energy)
-#
-#plt.figure(5)
-#plt.plot(ensemble1.timesteps,ensemble1.singleBath.momentum)
 
 #plt.show()
