@@ -60,20 +60,20 @@ def theoDiff(times, gamma, fitindex):
 
 startindex = int(math.floor((t1/dt)*0.50))
 endindex = int(math.floor(t1/dt))
-fitindex = int(math.floor((t1/dt)*0.75))
+fitindex = int(math.floor((t1/dt)*0.60))
 
 #const = varQ[mid]/np.power(timesteps[mid],gamma)
 #const_control = varQ[math.floor((t1/dt)*0.3)]/np.power(ensemble1.timesteps[math.floor((t1/dt)*0.3)],1.5)
 var = plt.figure(1)
 #plt.loglog(timesteps[startindex:endindex:16000],varQ[startindex:endindex:16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
-plt.plot(timesteps[::16000],varQ[::16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
+plt.loglog(timesteps[::16000],varQ[::16000],':',timesteps[startindex:endindex:16000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:16000])
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 
 Kernel = plt.figure(2)
-plt.loglog(timesteps[::16000],memoryKernel(timesteps)[::16000],timesteps[::1600],K[::1600],'.')
+plt.plot(timesteps[::16000],memoryKernel(timesteps)[::16000],timesteps[::1600],K[::1600],'.')
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 Kernel.savefig("./img/K.pdf",bbox_inches='tight')
