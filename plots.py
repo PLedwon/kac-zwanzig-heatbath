@@ -90,7 +90,7 @@ print(popt)
 
 var = plt.figure(1)
 plt.loglog(timesteps[startindex::8000],varQ[startindex::8000],label='Numerical results')
-plt.errorbar(timestepsErr, varQ[timeToIndexArray], std, fmt='none', elinewidth='0.2')
+plt.errorbar(timestepsErr, varQ[timeToIndexArray], std, fmt='none', elinewidth='0.7')
 plt.loglog(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]), linestyle='--',label=r'$\propto t^{1.5}$')
 plt.loglog(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='r',label=r'$\propto t$')
 plt.xlabel('t')
