@@ -6,52 +6,74 @@ import math
 import scipy
 from scipy.optimize import curve_fit
 
-resultList = glob.glob('/users/stud/ledwon/Documents/npzFiles/*.np[yz]')
+if not glob.glob('./*.npz'):
 
-data=np.load(resultList[0])
-varQ=np.zeros(np.size(data['squaredQ']))
-varP=np.zeros(np.size(data['squaredP']))
-aveQ=np.zeros(np.size(data['aveQ']))
-aveP=np.zeros(np.size(data['aveP']))
-K=np.zeros(np.size(data['K']))
-timesteps=data['timesteps']
-t1=data['t1']
-dt=data['dt']
-gamma=data['gamma']
-maxEError=0
-errorFileCount=0
-
-
-errorbarCount = 100
-indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
-timestepsErr=timesteps[::indexSkipValue]
-timeToIndexArray=np.floor(1.0/dt*timestepsErr)
-timeToIndexArray = timeToIndexArray.astype(int)
-for file in resultList:
-    results = np.load(file)
-    if results['maxEnergyError']>0.3:
-        resultList.remove(file)
-
-stdMat = np.zeros((len(timeToIndexArray),len(resultList)))
-i=0
-for file in resultList:
+    resultList = glob.glob('/users/stud/ledwon/Documents/npzFiles/*.np[yz]')
+    
+    data=np.load(resultList[0])
+    varQ=np.zeros(np.size(data['squaredQ']))
+    varP=np.zeros(np.size(data['squaredP']))
+    aveQ=np.zeros(np.size(data['aveQ']))
+    aveP=np.zeros(np.size(data['aveP']))
+    K=np.zeros(np.size(data['K']))
+    timesteps=data['timesteps']
+    t1=data['t1']
+    dt=data['dt']
+    gamma=data['gamma']
+    maxEError=0
+    errorFileCount=0
+    
+    
+    errorbarCount = 100
+    indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
+    timestepsErr=timesteps[::indexSkipValue]
+    timeToIndexArray=np.floor(1.0/dt*timestepsErr)
+    timeToIndexArray = timeToIndexArray.astype(int)
+    for file in resultList:
         results = np.load(file)
-        stdMat[:,i] = results['squaredQ'][timeToIndexArray] - results['aveQ'][timeToIndexArray]
+        if results['maxEnergyError']>0.3:
+            resultList.remove(file)
+    
+    stdMat = np.zeros((len(timeToIndexArray),len(resultList)))
+    i=0
+    for file in resultList:
+            results = np.load(file)
+            stdMat[:,i] = results['squaredQ'][timeToIndexArray] - results['aveQ'][timeToIndexArray]
+    
+            varQ += results['squaredQ'] - results['aveQ'] #not normalized yet
+            varP += results['squaredP'] - results['aveP']
+            K    += results['K']
+            print(results['maxEnergyError'])
+            i+=1
+            print(i)
+    
+    std = np.std(stdMat, axis=1)
+    K*=1.0/np.sum(K)
+    norm=1.0/(float(len(resultList)))
+    print(len(resultList))
+    varQ *= norm
+    varP *= norm
+    std  *= norm
 
-        varQ += results['squaredQ'] - results['aveQ'] #not normalized yet
-        varP += results['squaredP'] - results['aveP']
-        K    += results['K']
-        print(results['maxEnergyError'])
-        i+=1
-        print(i)
+    np.savez(data, varQ, timesteps, std, varP, K, t1, dt, gamma 
 
-std = np.std(stdMat, axis=1)
-K*=1.0/np.sum(K)
-norm=1.0/(float(len(resultList)))
-print(len(resultList))
-varQ *= norm
-varP *= norm
-std  *= norm
+else: 
+
+    data=np.load(glob.glob('../data/*.npz'))
+    varQ = data['varQ']
+    timesteps=data['timesteps']
+    std  = data['std']
+    varP = data['varP']
+    K    = data['K']
+    t1=data['t1']
+    dt=data['dt']
+    gamma=data['gamma']
+    
+    errorbarCount = 100
+    indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
+    timestepsErr=timesteps[::indexSkipValue]
+    timeToIndexArray=np.floor(1.0/dt*timestepsErr)
+
 
 
 if gamma>1.0:
