@@ -6,7 +6,7 @@ import math
 import scipy
 from scipy.optimize import curve_fit
 
-if not glob.glob('./*.npz'):
+if not glob.glob('../data/data.npz'):
 
     resultList = glob.glob('/users/stud/ledwon/Documents/npzFiles/*.np[yz]')
     
@@ -55,10 +55,10 @@ if not glob.glob('./*.npz'):
     varP *= norm
     std  *= norm
 
-    np.savez(data, varQ, timesteps, std, varP, K, t1, dt, gamma 
+    np.savez("./data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
 
 else: 
-
+    
     data=np.load(glob.glob('../data/*.npz'))
     varQ = data['varQ']
     timesteps=data['timesteps']
