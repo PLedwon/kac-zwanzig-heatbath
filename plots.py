@@ -19,24 +19,39 @@ t1=data['t1']
 dt=data['dt']
 gamma=data['gamma']
 maxEError=0
-errorFiles=0
+errorFileCount=0
 
+
+errorbarCount = 100
+indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
+timestepsErr=timesteps[::indexSkipValue]
+timeToIndexArray=np.floor(1.0/dt*timestepsErr)
+timeToIndexArray = timeToIndexArray.astype(int)
 for file in resultList:
     results = np.load(file)
     if results['maxEnergyError']>0.3:
-        errorFiles+=1
-    
-    else:
-        varQ += results['squaredQ'] - results['aveQ'] #have to normalize
+        resultList.remove(file)
+
+stdMat = np.zeros((len(timeToIndexArray),len(resultList)))
+i=0
+for file in resultList:
+        results = np.load(file)
+        stdMat[:,i] = results['squaredQ'][timeToIndexArray] - results['aveQ'][timeToIndexArray]
+
+        varQ += results['squaredQ'] - results['aveQ'] #not normalized yet
         varP += results['squaredP'] - results['aveP']
         K    += results['K']
         print(results['maxEnergyError'])
+        i+=1
+        print(i)
 
+std = np.std(stdMat, axis=1)
 K*=1.0/np.sum(K)
-norm=1.0/(float(len(results))-errorFiles)
-print(len(results)-errorFiles)
+norm=1.0/(float(len(resultList)))
+print(len(resultList))
 varQ *= norm
 varP *= norm
+std  *= norm
 
 
 if gamma>1.0:
@@ -65,12 +80,12 @@ def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.10))
+startindex = int(math.floor((t1/dt)*0.00))
 endindex = int(math.floor(t1/dt)*0.7)
 linindex = int(math.floor(t1/dt)*0.8)
 #fitindex = int(math.floor((t1/dt)*0.2))
-popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:2000],varQ[startindex:endindex:2000])    
-linpopt, linpcov = curve_fit(linDiff, timesteps[endindex::2000],varQ[endindex::2000])    
+popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:2000],varQ[startindex:endindex:2000])
+linpopt, linpcov = curve_fit(linDiff, timesteps[endindex::2000],varQ[endindex::2000])
 print(popt)
 
 var = plt.figure(1)
@@ -84,6 +99,7 @@ var.savefig("./img/varQlog.pdf",bbox_inches='tight')
 
 var = plt.figure(2)
 plt.plot(timesteps[::8000],varQ[::8000],label='Numerical results')
+plt.errorbar(timestepsErr, varQ[timeToIndexArray], std)
 #plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:8000],label=r'$\propto t^{1.5}$')
 plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),label=r'$\propto t^{1.5}$', linestyle='--')
 plt.plot(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),label=r'$\propto t$', linestyle=':',color='r')
