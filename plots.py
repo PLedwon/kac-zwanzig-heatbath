@@ -94,8 +94,6 @@ def memoryKernel(times):
         result *= 1.0/np.sum(result)
         return result
 
-#def theoDiff(times, gamma, fitindex):
-#        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
 
 def theoDiff(x,a,c):
     return a*np.power(x,gamma)+c
