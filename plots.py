@@ -59,8 +59,9 @@ if not glob.glob('../data/*.npz'):
 
 
 else: 
-
-    data=np.load(glob.glob('../data/*.npz')[0])
+    
+    datafile=glob.glob('/users/stud/ledwon/Seafile/Aktuell/Masterarbeit/data/data.npz')
+    data=np.load(datafile[0])
     varQ = data['varQ']
     timesteps=data['timesteps']
     std  = data['std']
