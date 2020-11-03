@@ -120,12 +120,14 @@ linpopt, linpcov = curve_fit(linDiff, timesteps[endindex::2000],varQ[endindex::2
 print(popt)
 
 var = plt.figure(1)
-plt.loglog(timesteps[startindex::8000],varQ[startindex::8000],label='Numerical results')
+plt.plot(timesteps[startindex::8000],varQ[startindex::8000],label='Numerical results')
 #plt.errorbar(timestepsErr, varQ[timeToIndexArray], std)
-plt.loglog(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
-plt.loglog(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='#009900',label=r'$\propto t$')
+plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
+plt.plot(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='#009900',label=r'$\propto t$')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
+plt.xscale('log')
+plt.yscale('log')
 plt.legend()
 var.savefig("./img/varQlog.pdf",bbox_inches='tight')
 
