@@ -6,7 +6,7 @@ import math
 import scipy
 from scipy.optimize import curve_fit
 
-if not str(glob.glob('./data/data.npz')):
+if not str(glob.glob('../data/data.npz')):
 
     resultList = glob.glob('/users/stud/ledwon/Documents/npzFiles/*.np[yz]')
     
@@ -55,11 +55,11 @@ if not str(glob.glob('./data/data.npz')):
     varP *= norm
     std  *= norm
 
-    np.savez("./data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
+    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
 
 else: 
     
-    datafile=glob.glob('/users/stud/ledwon/Seafile/Aktuell/Masterarbeit/kac-zwanzig-heatbath/data/data.npz')
+    datafile=glob.glob('/users/stud/ledwon/Seafile/Aktuell/Masterarbeit/data/data.npz')
     data=np.load(datafile[0])
     varQ = data['varQ']
     timesteps=data['timesteps']
