@@ -74,7 +74,7 @@ else:
     errorbarCount = 150
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[::indexSkipValue]
-    timeToIndexArray=np.floor(1.0/dt*timestepsErr)+1000
+    timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray=timeToIndexArray.astype(int)
     print(std.shape)
     errorbarCount = 100
@@ -127,7 +127,7 @@ plt.plot(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 plt.xscale('log')
-plt.yscale('log')
+plt.yscale('log', nonposy="clip")
 plt.legend()
 var.savefig("./img/varQlog.pdf",bbox_inches='tight')
 
