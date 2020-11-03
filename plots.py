@@ -24,7 +24,7 @@ if not glob.glob('../data/*.npz'):
     errorFileCount=0
     
     
-    errorbarCount = 100
+    errorbarCount = 70
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[::indexSkipValue]
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
@@ -74,7 +74,7 @@ else:
     errorbarCount = 150
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[::indexSkipValue]
-    timeToIndexArray=np.floor(1.0/dt*timestepsErr)+10
+    timeToIndexArray=np.floor(1.0/dt*timestepsErr)+1000
     timeToIndexArray=timeToIndexArray.astype(int)
     print(std.shape)
     errorbarCount = 100
