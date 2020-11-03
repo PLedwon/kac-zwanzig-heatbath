@@ -6,7 +6,7 @@ import math
 import scipy
 from scipy.optimize import curve_fit
 
-if not str(glob.glob('../data/data.npz')):
+if not glob.glob('../data/*.npz'):
 
     resultList = glob.glob('/users/stud/ledwon/Documents/npzFiles/*.np[yz]')
     
@@ -57,10 +57,10 @@ if not str(glob.glob('../data/data.npz')):
 
     np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
 
+
 else: 
-    
-    datafile=glob.glob('/users/stud/ledwon/Seafile/Aktuell/Masterarbeit/data/data.npz')
-    data=np.load(datafile[0])
+
+    data=np.load(glob.glob('../data/*.npz')[0])
     varQ = data['varQ']
     timesteps=data['timesteps']
     std  = data['std']
@@ -76,6 +76,12 @@ else:
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray=timeToIndexArray.astype(int)
     print(std.shape)
+    errorbarCount = 100
+    indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
+    timestepsErr=timesteps[::indexSkipValue]
+    timeToIndexArray=np.floor(1.0/dt*timestepsErr)
+    timeToIndexArray=timeToIndexArray.astype(int)
+
 
 
 if gamma>1.0:
@@ -94,6 +100,8 @@ def memoryKernel(times):
         result *= 1.0/np.sum(result)
         return result
 
+#def theoDiff(times, gamma, fitindex):
+#        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
 
 def theoDiff(x,a,c):
     return a*np.power(x,gamma)+c
