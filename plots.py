@@ -77,6 +77,8 @@ else:
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray=timeToIndexArray.astype(int)
 
+    std = np.array(std)
+
 
 
 if gamma>1.0:
