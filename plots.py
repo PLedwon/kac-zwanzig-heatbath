@@ -76,12 +76,6 @@ else:
     timestepsErr=timesteps[::indexSkipValue]
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray=timeToIndexArray.astype(int)
-    print(std.shape)
-    errorbarCount = 100
-    indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
-    timestepsErr=timesteps[::indexSkipValue]
-    timeToIndexArray=np.floor(1.0/dt*timestepsErr)
-    timeToIndexArray=timeToIndexArray.astype(int)
 
 
 
@@ -119,13 +113,15 @@ popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:2000],varQ[starti
 linpopt, linpcov = curve_fit(linDiff, timesteps[endindex::2000],varQ[endindex::2000])
 print(popt)
 
+std=std.astype(float)
+
 var = plt.figure(1)
 plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
-plt.errorbar(timesteps[startindex::8000],varQ[startindex::8000],label='Numerical results')
-plt.errorbar(timestepsErr, varQ[timeToIndexArray], std)
-plt.errorbar(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
-plt.errorbar(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='#009900',label=r'$\propto t$')
+#plt.errorbar(timesteps[startindex::8000],varQ[startindex::8000],np.zeros(np.size(timesteps[startindex::8000])),label='Numerical results')
+plt.errorbar(timestepsErr, varQ[timeToIndexArray],0)
+#plt.errorbar(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),np.zeros(np.size(timesteps[startindex::8000])), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
+#plt.errorbar(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),np.zeros(np.size(timesteps[startindex::8000])),linestyle=':',color='#009900',label=r'$\propto t$')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 plt.legend()
@@ -133,8 +129,7 @@ var.savefig("./img/varQlog.pdf",bbox_inches='tight')
 
 var = plt.figure(2)
 plt.plot(timesteps[::8000],varQ[::8000],label='Numerical results',color='#FC9169' )
-plt.errorbar(timestepsErr, varQ[timeToIndexArray], std, fmt='none', ecolor='#FC9169',elinewidth='0.7')
-#plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps,gamma,fitindex)[startindex:endindex:8000],label=r'$\propto t^{1.5}$')
+plt.errorbar(timestepsErr, varQ[timeToIndexArray], 0, fmt='none', ecolor='#FC9169',elinewidth='0.7')
 plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),label=r'$\propto t^{1.5}$',color='#0066FF', linestyle='--')
 plt.plot(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),label=r'$\propto t$', linestyle=':',color='#009900')
 plt.xlabel('t')
