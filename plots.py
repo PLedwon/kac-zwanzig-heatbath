@@ -35,10 +35,12 @@ if not glob.glob('../data/*.npz'):
             resultList.remove(file)
     
     stdMat = np.zeros((len(timeToIndexArray),len(resultList)))
+    stdMatK = np.zeros((len(timeToIndexArray),len(resultList)))
     i=0
     for file in resultList:
             results = np.load(file)
             stdMat[:,i] = results['squaredQ'][timeToIndexArray] - results['aveQ'][timeToIndexArray]
+            stdMatK[:,i] = results['K'][timeToIndexArray] 
     
             varQ += results['squaredQ'] - results['aveQ'] #not normalized yet
             varP += results['squaredP'] - results['aveP']
@@ -48,14 +50,16 @@ if not glob.glob('../data/*.npz'):
             print(i)
     
     std = np.std(stdMat, axis=1)
+    stdK = np.std(stdMatK, axis=1)
     K*=1.0/np.sum(K)
     norm=1.0/(float(len(resultList)))
     print(len(resultList))
     varQ *= norm
     varP *= norm
     std  *= norm
+    stdK  *= norm
 
-    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
+    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std,stdK=stdK, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
 
 
 else: 
@@ -140,6 +144,7 @@ var.savefig("./img/varQ.pdf",bbox_inches='tight')
 Kernel = plt.figure(3)
 plt.plot(timesteps[::1600],K[::1600],label='Bath memory kernel')
 plt.plot(timesteps[::16000],memoryKernel(timesteps)[::16000],label='Theoretical memory kernel', linestyle=':')
+plt.errorbar(timestepsErr, K[timeToIndexArray],yerr=stdK, fmt='none',capsize=2.0)
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 plt.legend()
