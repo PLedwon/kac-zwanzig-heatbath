@@ -59,7 +59,7 @@ if not glob.glob('../data/*.npz'):
     std  *= norm
     stdK  *= norm
 
-    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std,stdK=stdK, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
+    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, stdK=stdK, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
 
 
 else: 
@@ -142,6 +142,8 @@ plt.legend()
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 Kernel = plt.figure(3)
+plt.xscale('log', nonposx="clip")
+plt.yscale('log', nonposy="clip")
 plt.plot(timesteps[::1600],K[::1600],label='Bath memory kernel')
 plt.plot(timesteps[::16000],memoryKernel(timesteps)[::16000],label='Theoretical memory kernel', linestyle=':')
 plt.errorbar(timestepsErr, K[timeToIndexArray],yerr=stdK, fmt='none',capsize=2.0)
