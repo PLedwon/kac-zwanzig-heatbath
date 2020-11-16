@@ -93,7 +93,7 @@ print(lowerNRange[ind[0]],upperNRange[ind[1]])
 omega_min, omega_max = setFrequencyRange(lowerNRange[ind[0]],upperNRange[ind[1]])
 omega =np.linspace(omega_min,omega_max,num=N)
 masses = computeMasses(omega)
-timesteps=np.arange(t0,1000,0.1)
+timesteps=np.arange(t0,50,0.1)
 k=np.multiply(masses,np.power(omega,2)) # compute spring constants
 K = computeKernel(timesteps,k,omega)
 realK = memoryKernel(timesteps)
