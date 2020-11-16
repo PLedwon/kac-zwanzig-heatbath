@@ -30,7 +30,7 @@ if not glob.glob('../data/*.npz'):
     errorFileCount=0
     
     
-    errorbarCount = 5
+    errorbarCount = 100
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[::indexSkipValue]
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
@@ -88,14 +88,12 @@ else:
     errorbarCount = 100
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[::indexSkipValue]
-    print(timestepsErr)
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray=timeToIndexArray.astype(int)
 
 #log
     #timestepsErrLog=np.power(10,np.log10(timesteps)[::indexSkipValue])
     timestepsErrLog=np.logspace(1.3,np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
-    print(timestepsErrLog)
     timeToIndexArrayLog=np.floor(1.0/dt*timestepsErrLog)
     timeToIndexArrayLog=timeToIndexArrayLog.astype(int)
 
@@ -128,7 +126,7 @@ def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.00))
+startindex = int(math.floor((t1/dt)*0.10))
 endindex = int(math.floor(t1/dt)*0.7)
 linindex = int(math.floor(t1/dt)*0.8)
 #fitindex = int(math.floor((t1/dt)*0.2))
