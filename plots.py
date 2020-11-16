@@ -125,7 +125,7 @@ def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.10))
+startindex = int(math.floor((t1/dt)*0.00))
 endindex = int(math.floor(t1/dt)*0.7)
 linindex = int(math.floor(t1/dt)*0.8)
 #fitindex = int(math.floor((t1/dt)*0.2))
