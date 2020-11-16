@@ -35,6 +35,11 @@ if not glob.glob('../data/*.npz'):
     timestepsErr=timesteps[::indexSkipValue]
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray = timeToIndexArray.astype(int)
+
+    timestepsErrLog=np.logspace(2.3,np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
+    timeToIndexArrayLog=np.floor(1.0/dt*timestepsErrLog)
+    timeToIndexArrayLog=timeToIndexArrayLog.astype(int)
+
     for file in resultList:
         results = np.load(file)
         if results['maxEnergyError']>0.3:
