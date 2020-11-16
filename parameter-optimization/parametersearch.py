@@ -19,8 +19,8 @@ t1=1000.0
 dt=0.7#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(50.0,t1,dt)
-lowerNRange =np.arange(-0.9,-0.4,0.05)
-upperNRange =np.arange(0.8,1.5,0.05)
+lowerNRange =np.arange(-1.1,-0.4,0.05)
+upperNRange =np.arange(0.7,1.5,0.05)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
@@ -93,13 +93,13 @@ print(lowerNRange[ind[0]],upperNRange[ind[1]])
 omega_min, omega_max = setFrequencyRange(lowerNRange[ind[0]],upperNRange[ind[1]])
 omega =np.linspace(omega_min,omega_max,num=N)
 masses = computeMasses(omega)
-timesteps=np.arange(0,1000,0.1)
+timesteps=np.arange(t0,1000,0.1)
 k=np.multiply(masses,np.power(omega,2)) # compute spring constants
 K = computeKernel(timesteps,k,omega)
 realK = memoryKernel(timesteps)
 
 kern = plt.figure(1)
-plt.plot(timesteps,K,timesteps,realK)
+plt.loglog(timesteps,K,timesteps,realK)
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 kern.savefig("MemoryKernel.pdf")
