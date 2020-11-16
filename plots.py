@@ -6,10 +6,10 @@ import math
 import scipy
 from scipy.optimize import curve_fit
 
-#def moving_average(a, n=3) :
-#    ret = np.cumsum(a, dtype=float)
-#    ret[n:] = ret[n:] - ret[:-n]
-#    return ret[n - 1:] / n
+def moving_average(a, n=3) :
+    ret = np.cumsum(a, dtype=float)
+    ret[n:] = ret[n:] - ret[:-n]
+    return ret[n - 1:] / n
 
 
 if not glob.glob('../data/*.npz'):
@@ -59,7 +59,7 @@ if not glob.glob('../data/*.npz'):
     stdK = np.std(stdMatK, axis=1)
     print(np.sum(K))
     K*=1.0/np.sum(K)
-#    K=moving_average(K,1000)    
+    K=moving_average(K,1000)    
     norm=1.0/(float(len(resultList)))
     print(len(resultList))
     varQ *= norm
@@ -129,14 +129,12 @@ print(popt)
 
 
 var = plt.figure(1)
-#plt.xscale('log', nonposx="clip")
-#plt.yscale('log', nonposy="clip")
+plt.xscale('log', nonposx="clip")
+plt.yscale('log', nonposy="clip")
 plt.plot(timesteps[startindex::8000],varQ[startindex::8000],label='Numerical results')
 plt.errorbar(timestepsErr, varQ[timeToIndexArray],yerr=std, fmt='none',capsize=2.0)
 #plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
 #plt.errorbar(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='#009900',label=r'$\propto t$')
-plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
-plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
 plt.legend()
