@@ -15,12 +15,12 @@ oscMass=1.0 #1.0 #mass of heaviest bath oscillator
 M=1.0# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
-t1=1000.0
-dt=0.7#1.0/float(N)#(t1-t0)/100.0
+t1=500.0
+dt=2.0#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange =np.arange(-0.85,-0.75,0.005)
-upperNRange =np.arange(0.85,0.98,0.005)
+lowerNRange =np.arange(-0.85,-0.75,0.001)
+upperNRange =np.arange(0.85,0.98,0.001)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
