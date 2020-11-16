@@ -30,7 +30,7 @@ if not glob.glob('../data/*.npz'):
     errorFileCount=0
     
     
-    errorbarCount = 50
+    errorbarCount = 5
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[::indexSkipValue]
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
