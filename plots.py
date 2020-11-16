@@ -137,7 +137,7 @@ linpopt, linpcov = curve_fit(linDiff, timesteps[endindex::2000],varQ[endindex::2
 var = plt.figure(1)
 plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
-plt.plot(timesteps[startindex::8000],varQ[startindex::8000],label='Numerical results', color='#FC9169')
+plt.plot(timesteps[::8000],varQ[::8000],label='Numerical results', color='#FC9169')
 plt.errorbar(timestepsErrLog, varQ[timeToIndexArrayLog],yerr=std, fmt='none',capsize=1.0,ecolor='#FC9169')
 plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
 plt.errorbar(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='#009900',label=r'$\propto t$')
