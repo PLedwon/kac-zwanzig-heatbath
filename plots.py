@@ -59,9 +59,8 @@ if not glob.glob('../data/*.npz'):
     stdK = np.std(stdMatK, axis=1)
     print(np.sum(K))
     K*=1.0/np.sum(K)
-    K=moving_average(K,1000)    
+    #K=moving_average(K,1000)    
     norm=1.0/(float(len(resultList)))
-    print(len(resultList))
     varQ *= norm
     varP *= norm
     std  *= norm
@@ -160,6 +159,8 @@ plt.ylabel('Var(Q)')
 plt.legend()
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
+
+kerneltimes=np.linspace(1500,timesteps[-1],5000)
 Kernel = plt.figure(3)
 plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
@@ -167,7 +168,7 @@ plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
 plt.plot(timesteps[kernelplotindex::160000],K[kernelplotindex::160000],label='Bath memory kernel',color='#FC9169')
 #plt.errorbar(timestepsErr, K[timeToIndexArray],yerr=stdK, fmt='none',capsize=1.0,ecolor='#FC9169',elinewidth='0.7')
-plt.plot(timesteps[kernelplotindex::160000],memoryKernel(timesteps)[kernelplotindex::160000],label='Theoretical memory kernel', linestyle=':')
+plt.plot(kerneltimes,memoryKernel(kerneltimes),label='Theoretical memory kernel', linestyle=':')
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 plt.legend()
