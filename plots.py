@@ -160,11 +160,11 @@ plt.legend()
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 
-kerneltimes=np.linspace(1500,timesteps[-1],5000)
+kerneltimes=np.linspace(timesteps[kernelplotindex],timesteps[-1],5000)
 Kernel = plt.figure(3)
 plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
-plt.xscale('log', nonposx="clip")
+#plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
 plt.plot(timesteps[kernelplotindex::160000],K[kernelplotindex::160000],label='Bath memory kernel',color='#FC9169')
 #plt.errorbar(timestepsErr, K[timeToIndexArray],yerr=stdK, fmt='none',capsize=1.0,ecolor='#FC9169',elinewidth='0.7')
