@@ -7,7 +7,7 @@ import scipy.special
 
 ########################################################################################################################
 #set parameters
-N=8000 #number of bath oscillators
+N=10000 #number of bath oscillators
 beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
 P0=0.0
@@ -19,8 +19,8 @@ t1=1000.0
 dt=0.7#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange =np.arange(-1.1,-0.4,0.05)
-upperNRange =np.arange(0.6,1.2,0.05)
+lowerNRange =np.arange(-1.1,-0.4,0.1)
+upperNRange =np.arange(0.6,1.2,0.1)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
