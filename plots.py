@@ -126,7 +126,7 @@ def linDiff(x,a,c):
 
 startindex = int(math.floor((t1/dt)*0.10))
 plotindex = int(math.floor((t1/dt)*0.05))
-kernelplotindex = int(math.floor((t1/dt)*0.5))
+kernelplotindex = int(math.floor((t1/dt)*0.2))
 endindex = int(math.floor(t1/dt)*0.7)
 linindex = int(math.floor(t1/dt)*0.8)
 #fitindex = int(math.floor((t1/dt)*0.2))
