@@ -88,11 +88,14 @@ else:
     errorbarCount = 100
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[::indexSkipValue]
+    print(timestepsErr)
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray=timeToIndexArray.astype(int)
 
 #log
-    timestepsErrLog=np.power(10,np.log10(timesteps[::indexSkipValue]))
+    #timestepsErrLog=np.power(10,np.log10(timesteps)[::indexSkipValue])
+    timestepsErrLog=np.logspace(np.log10(timesteps[0]),np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
+    print(timestepsErrLog)
     timeToIndexArrayLog=np.floor(1.0/dt*timestepsErrLog)
     timeToIndexArrayLog=timeToIndexArrayLog.astype(int)
 
@@ -131,7 +134,7 @@ linindex = int(math.floor(t1/dt)*0.8)
 #fitindex = int(math.floor((t1/dt)*0.2))
 popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:2000],varQ[startindex:endindex:2000])
 linpopt, linpcov = curve_fit(linDiff, timesteps[endindex::2000],varQ[endindex::2000])
-print(popt)
+#print(popt)
 
 
 var = plt.figure(1)
