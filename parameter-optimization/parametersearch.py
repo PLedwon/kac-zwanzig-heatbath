@@ -19,8 +19,8 @@ t1=2000.0
 dt=1.0#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange = np.linspace(-1.2,-0.9,30)
-upperNRange = np.linspace(0.9,1.3,30)
+lowerNRange = np.linspace(-1.2,-0.4,20)
+upperNRange = np.linspace(0.5,1.5,20)
 #lowerNRange =np.arange(-1.1,-0.6,0.1)
 #upperNRange =np.arange(0.8,1.3,0.1)
 #lowerNRange =np.arange(-0.5,-0.8,0.01)
@@ -108,7 +108,7 @@ plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 kern.savefig("MemoryKernel.pdf")
 
-timesteps=np.arange(50,1000,0.1)
+timesteps=np.arange(50,t1,0.1)
 K = computeKernel(timesteps,k,omega)
 realK = memoryKernel(timesteps)
 kernlog = plt.figure(2)
