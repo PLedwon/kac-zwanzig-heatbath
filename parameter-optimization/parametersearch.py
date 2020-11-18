@@ -28,7 +28,7 @@ upperNRange = np.linspace(0.8,1.3,30)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
-gamma=1.5
+gamma=1.3
 
 if gamma>1.0:
     diffType='super'
