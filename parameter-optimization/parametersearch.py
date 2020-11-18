@@ -19,8 +19,8 @@ t1=1000.0
 dt=1.0#1.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange = np.linspace(-1.2,-0.7,30)
-upperNRange = np.linspace(0.8,1.3,30)
+lowerNRange = np.linspace(-1.0,-0.9,30)
+upperNRange = np.linspace(0.95,1.1,30)
 #lowerNRange =np.arange(-1.1,-0.6,0.1)
 #upperNRange =np.arange(0.8,1.3,0.1)
 #lowerNRange =np.arange(-0.5,-0.8,0.01)
@@ -28,7 +28,7 @@ upperNRange = np.linspace(0.8,1.3,30)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
-gamma=1.3
+gamma=1.2
 
 if gamma>1.0:
     diffType='super'
