@@ -177,6 +177,6 @@ plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 plt.legend()
 Kernel.savefig("./img/K.pdf",bbox_inches='tight')
-
+print(K[0])
 
 #plt.show()
