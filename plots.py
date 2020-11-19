@@ -36,7 +36,7 @@ if not glob.glob('../data/*.npz'):
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray = timeToIndexArray.astype(int)
 
-    timestepsErrLog=np.logspace(1.8,np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
+    timestepsErrLog=np.logspace(2.0,np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
     timeToIndexArrayLog=np.floor(1.0/dt*timestepsErrLog)
     timeToIndexArrayLog=timeToIndexArrayLog.astype(int)
 
@@ -96,7 +96,7 @@ else:
     timeToIndexArray=timeToIndexArray.astype(int)
 
 #log
-    timestepsErrLog=np.logspace(1.8,np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
+    timestepsErrLog=np.logspace(2.0,np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
     timeToIndexArrayLog=np.floor(1.0/dt*timestepsErrLog)
     timeToIndexArrayLog=timeToIndexArrayLog.astype(int)
 
