@@ -42,7 +42,7 @@ if not glob.glob('../data/*.npz'):
 
     for file in resultList:
         results = np.load(file)
-        if results['maxEnergyError']>0.05:
+        if results['maxEnergyError']>0.2:
             resultList.remove(file)
     
     stdMat = np.zeros((len(timeToIndexArray),len(resultList)))
@@ -62,7 +62,7 @@ if not glob.glob('../data/*.npz'):
     
     std = np.std(stdMat, axis=1)
     stdK = np.std(stdMatK, axis=1)
-    print(np.sum(K))
+#    print(np.sum(K))
     K*=1.0/np.sum(K)
     #K=moving_average(K,1000)    
     norm=1.0/(float(len(resultList)))
