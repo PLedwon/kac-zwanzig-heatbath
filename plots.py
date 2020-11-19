@@ -76,7 +76,7 @@ if not glob.glob('../data/*.npz'):
 
 else: 
     
-    datafile=glob.glob('/users/stud/ledwon/Seafile/Aktuell/Masterarbeit/data/data.npz')
+    datafile=glob.glob('/users/stud/ledwon/Seafile/Aktuell/Masterarbeit/data/*.npz')
     data=np.load(datafile[0])
     varQ = data['varQ']
     timesteps=data['timesteps']
@@ -171,7 +171,7 @@ plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
 plt.xscale('log', nonposx="clip")
 #plt.yscale('log', nonposy="clip")
-plt.plot(timesteps[kernelplotindex::1600],K[kernelplotindex::1600],label='Bath memory kernel',color='#FC9169')
+#plt.plot(timesteps[kernelplotindex::],K[kernelplotindex::],label='Bath memory kernel',color='#FC9169')
 plt.errorbar(timestepsErr, K[timeToIndexArray],yerr=stdK, fmt='none',capsize=1.0,ecolor='#FC9169',elinewidth='0.7')
 plt.plot(kerneltimes,memoryKernel(kerneltimes),label='Theoretical memory kernel', linestyle=':')
 plt.xlabel('t')
