@@ -91,7 +91,7 @@ else:
 #linear 
     errorbarCount = 100
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
-    timestepsErr=timesteps[::indexSkipValue]
+    timestepsErr=timesteps[0::indexSkipValue]
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
     timeToIndexArray=timeToIndexArray.astype(int)
 
