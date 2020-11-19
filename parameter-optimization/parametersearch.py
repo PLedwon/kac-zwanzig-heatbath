@@ -16,11 +16,11 @@ M=1.0# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=1.0
 t1=1000.0
-dt=1.#01.0/float(N)#(t1-t0)/100.0
+dt=0.2#01.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange = np.linspace(-1.2,-0.8,30)
-upperNRange = np.linspace(0.8,1.3,30)
+lowerNRange = np.linspace(-1.06,-1.0,20)
+upperNRange = np.linspace(1.25,1.31,20)
 #lowerNRange =np.arange(-1.1,-0.6,0.1)
 #upperNRange =np.arange(0.8,1.3,0.1)
 #lowerNRange =np.arange(-0.5,-0.8,0.01)
