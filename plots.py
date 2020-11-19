@@ -6,10 +6,10 @@ import math
 import scipy
 from scipy.optimize import curve_fit
 
-def moving_average(a, n=3) :
-    ret = np.cumsum(a, dtype=float)
-    ret[n:] = ret[n:] - ret[:-n]
-    return ret[n - 1:] / n
+#def moving_average(a, n=3) :
+#    ret = np.cumsum(a, dtype=float)
+#    ret[n:] = ret[n:] - ret[:-n]
+#    return ret[n - 1:] / n
 
 
 if not glob.glob('../data/*.npz'):
@@ -169,7 +169,7 @@ Kernel = plt.figure(3)
 plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
 plt.xscale('log', nonposx="clip")
-#plt.yscale('log', nonposy="clip")
+plt.yscale('log', nonposy="clip")
 plt.plot(timestepsErr,K[timeToIndexArray],label='Bath memory kernel',color='#FC9169' )
 plt.errorbar(timestepsErr, K[timeToIndexArray],yerr=stdK, fmt='none',capsize=1.0,ecolor='#FC9169',elinewidth='0.7')
 plt.plot(kerneltimes,memoryKernel(kerneltimes),label='Theoretical memory kernel', linestyle=':')
