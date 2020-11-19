@@ -42,7 +42,7 @@ if not glob.glob('../data/*.npz'):
 
     for file in resultList:
         results = np.load(file)
-        if results['maxEnergyError']>0.2:
+        if results['maxEnergyError']>0.3:
             resultList.remove(file)
     
     stdMat = np.zeros((len(timeToIndexArray),len(resultList)))
