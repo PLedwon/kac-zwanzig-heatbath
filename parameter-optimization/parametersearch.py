@@ -16,11 +16,11 @@ M=1.0# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=1.0
 t1=1000.0
-dt=0.05#1.0/float(N)#(t1-t0)/100.0
+dt=1.#01.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange = np.linspace(-0.96,-0.92,20)
-upperNRange = np.linspace(0.99,1.06,20)
+lowerNRange = np.linspace(-1.2,-0.8,30)
+upperNRange = np.linspace(0.8,1.3,30)
 #lowerNRange =np.arange(-1.1,-0.6,0.1)
 #upperNRange =np.arange(0.8,1.3,0.1)
 #lowerNRange =np.arange(-0.5,-0.8,0.01)
@@ -28,7 +28,7 @@ upperNRange = np.linspace(0.99,1.06,20)
 cutoff = 10000
 kernelDiff = cutoff*np.ones((len(lowerNRange),len(upperNRange)))
 
-gamma=1.2
+gamma=1.5
 
 if gamma>1.0:
     diffType='super'
@@ -80,8 +80,8 @@ for i in range(0,len(lowerNRange)-1):
             a=lowerNRange[i]
             b=upperNRange[j]
             omega_min, omega_max = setFrequencyRange(a,b)
-            #omega = np.linspace(omega_min,omega_max,num=N)
-            omega =np.random.uniform(omega_min,omega_max,N) # np.linspace(omega_min,omega_max,num=N)
+            omega = np.linspace(omega_min,omega_max,num=N)
+            #omega =np.random.uniform(omega_min,omega_max,N) # np.linspace(omega_min,omega_max,num=N)
             masses = computeMasses(omega)
             k=np.multiply(masses,np.power(omega,2)) # compute spring constants
             K = computeKernel(timesteps,k,omega)
