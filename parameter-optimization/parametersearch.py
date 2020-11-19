@@ -7,7 +7,7 @@ import scipy.special
 
 ########################################################################################################################
 #set parameters
-N=16000 #number of bath oscillators
+N=8000 #number of bath oscillators
 beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
 P0=0.0
