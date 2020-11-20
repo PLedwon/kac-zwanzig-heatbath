@@ -19,8 +19,6 @@ class bathensemble():
         self.gamma=gamma
         self.timesteps=np.arange(self.t0,self.t1,self.dt)
         self.diffType = diffType
-        self.a=1.0/3.0
-        self.c=0.5*(1-self.a) # 0<a,c<1
         self.K_N=np.zeros(self.timesteps.size) # memory kernel value at every timestep
         self.K = np.zeros(self.timesteps.size)
         self.singleBathK_N = np.zeros(self.timesteps.size)
@@ -51,11 +49,11 @@ class bathensemble():
             omega_max=omega_min*self.N**1.66
 
         if self.diffType == 'super':
-            omega_min=self.N**(-0.816)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
-            omega_max=omega_min*self.N**0.946
+            omega_min=self.N**(-1.0210)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
+            omega_max=omega_min*self.N**1.2997
 
-        #omega =np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
-        omega =np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
+        omega =np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
+        #omega =np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
 
         masses = self.computeMasses(omega)
         k=np.multiply(masses,np.power(omega,2)) # compute spring constants
