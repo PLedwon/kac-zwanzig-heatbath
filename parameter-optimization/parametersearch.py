@@ -19,8 +19,8 @@ t1=3000.0
 dt=0.5#01.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange = np.linspace(-1.15,-1.12,30)
-upperNRange = np.linspace(1.19,1.43,30)
+lowerNRange = np.linspace(-1.1,-0.7,30)
+upperNRange = np.linspace(0.8,1.35,30)
 #lowerNRange =np.arange(-1.1,-0.6,0.1)
 #upperNRange =np.arange(0.8,1.3,0.1)
 #lowerNRange =np.arange(-0.5,-0.8,0.01)
