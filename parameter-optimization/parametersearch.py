@@ -7,7 +7,7 @@ import scipy.special
 
 ########################################################################################################################
 #set parameters
-N=8000 #number of bath oscillators
+N=16000 #number of bath oscillators
 beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
 P0=0.0
@@ -15,7 +15,7 @@ oscMass=1.0 #1.0 #mass of heaviest bath oscillator
 M=1.0# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
-t1=4000.0
+t1=3000.0
 dt=0.5#01.0/float(N)#(t1-t0)/100.0
 
 timesteps=np.arange(0.0,t1,dt)
