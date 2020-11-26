@@ -108,7 +108,7 @@ plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 kern.savefig("MemoryKernel.pdf")
 
-timesteps=np.arange(50,t1,0.1)
+timesteps=np.arange(0,t1,0.1)
 K = computeKernel(timesteps,k,omega)
 realK = memoryKernel(timesteps)
 kernlog = plt.figure(2)
