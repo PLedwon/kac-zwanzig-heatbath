@@ -129,7 +129,7 @@ def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.00))
+startindex = int(math.floor((t1/dt)*0.20))
 plotindex = int(math.floor((t1/dt)*0.05))
 kernelplotindex = int(math.floor((t1/dt)*0.0))
 endindex = int(math.floor(t1/dt)*0.7)
@@ -164,7 +164,7 @@ plt.legend()
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 
-kerneltimes=np.linspace(timesteps[kernelplotindex],timesteps[-1],5000)
+kerneltimes=np.linspace(timesteps[kernelplotindex],timesteps[-1],50000)
 Kernel = plt.figure(3)
 plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
