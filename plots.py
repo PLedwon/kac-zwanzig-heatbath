@@ -123,7 +123,7 @@ def memoryKernel(times):
 #        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
 
 def theoDiff(x,a,c):
-    return a*np.power(x,gamma)#+c
+    return a*np.power(x,gamma)+c
 
 def linDiff(x,a,c):
     return a*x+c
