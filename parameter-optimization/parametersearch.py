@@ -12,15 +12,16 @@ beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
 P0=0.0
 oscMass=1.0 #1.0 #mass of heaviest bath oscillator
-M=1.0# mass of the distinguished particle
+M=0.01# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
-t1=4000.0
-dt=5.0#01.0/float(N)#(t1-t0)/100.0
-
+t1=3000.0
+#dt=0.0005#01.0/float(N)#(t1-t0)/100.0
+dt=5.5
+gridsize = 10
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange = np.linspace(-1.03,-1.01,30)
-upperNRange = np.linspace(1.26,1.28,30)
+lowerNRange = np.linspace(-1.1,-0.9,gridsize)
+upperNRange = np.linspace(1.0,1.3,gridsize)
 #lowerNRange =np.arange(-1.1,-0.6,0.1)
 #upperNRange =np.arange(0.8,1.3,0.1)
 #lowerNRange =np.arange(-0.5,-0.8,0.01)
@@ -74,6 +75,8 @@ def memoryKernel(timesteps):
 realK = memoryKernel(timesteps)
 invK = np.reciprocal(realK)
 
+counter=0
+
 for i in range(0,len(lowerNRange)-1):
     for j in range(0,len(upperNRange)-1):
 
@@ -88,7 +91,9 @@ for i in range(0,len(lowerNRange)-1):
             kernelDiff[i,j] = dt*np.sum(np.abs(K-realK))/np.sum(realK)/t1
             if kernelDiff[i,j] > cutoff:
                     kernelDiff[i,j] =cutoff
-
+            counter+=1
+            progressstr= str(counter) + '/'+ str(np.power(gridsize,2)) + ' done'
+            print(progressstr)
 ind = np.unravel_index(np.argmin(kernelDiff, axis=None), kernelDiff.shape)
 print(kernelDiff[ind])
 print(lowerNRange[ind[0]],upperNRange[ind[1]])
@@ -108,14 +113,14 @@ plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 kern.savefig("MemoryKernel.pdf")
 
-timesteps=np.arange(0,t1,0.1)
+timesteps=np.arange(0,2*t1,0.1)
 K = computeKernel(timesteps,k,omega)
 realK = memoryKernel(timesteps)
 kernlog = plt.figure(2)
 plt.plot(timesteps,np.abs(K),timesteps,np.abs(realK))
-plt.xlabel('t')                  
+plt.xlabel('t')
 plt.xscale('log')
 plt.yscale('log')
-plt.ylabel('Memory Kernel')     
-kernlog.savefig("MemoryKernelLog.pdf")   
+plt.ylabel('Memory Kernel')
+kernlog.savefig("MemoryKernelLog.pdf")
 #plt.show()
