@@ -16,12 +16,12 @@ M=0.01# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
 t1=3000.0
-dt=0.001#01.0/float(N)#(t1-t0)/100.0
-#dt=5.5
-gridsize = 2
+#dt=0.001#01.0/float(N)#(t1-t0)/100.0
+dt=5.5
+gridsize = 6
 timesteps=np.arange(0.0,t1,dt)
 lowerNRange = np.linspace(-1.1,-0.9,gridsize)
-upperNRange = np.linspace(1.0,1.3,gridsize)
+upperNRange = np.linspace(0.9,1.3,gridsize)
 #lowerNRange =np.arange(-1.1,-0.9,0.1)
 #upperNRange =np.arange(0.8,1.3,0.1)
 cutoff = 10000
@@ -91,7 +91,7 @@ for i in range(0,len(lowerNRange)-1):
                     kernelDiff[i,j] =cutoff
             counter+=1
             progressstr= str(counter) + '/'+ str(np.power(gridsize,2)) + ' done'
-            print(progressstr)
+            #print(progressstr)
 ind = np.unravel_index(np.argmin(kernelDiff, axis=None), kernelDiff.shape)
 print(kernelDiff[ind])
 print(lowerNRange[ind[0]],upperNRange[ind[1]])
@@ -104,6 +104,8 @@ timesteps=np.arange(t0,t1,1.0)
 k=np.multiply(masses,np.power(omega,2)) # compute spring constants
 K = computeKernel(timesteps,k,omega)
 realK = memoryKernel(timesteps)
+
+np.savez(outfile, ind=ind, kernelDiff=kernelDiff, lowerNRange, upperNRange)
 
 kern = plt.figure(1)
 plt.plot(timesteps,K,timesteps,realK)
