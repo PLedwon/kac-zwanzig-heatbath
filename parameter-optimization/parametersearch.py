@@ -16,8 +16,8 @@ M=0.01# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
 t1=3000.0
-#dt=0.001#01.0/float(N)#(t1-t0)/100.0
-dt=5.5
+dt=0.001#01.0/float(N)#(t1-t0)/100.0
+#dt=5.5
 gridsize = 6
 timesteps=np.arange(0.0,t1,dt)
 lowerNRange = np.linspace(-1.1,-0.9,gridsize)
@@ -105,7 +105,7 @@ k=np.multiply(masses,np.power(omega,2)) # compute spring constants
 K = computeKernel(timesteps,k,omega)
 realK = memoryKernel(timesteps)
 
-np.savez(outfile, ind=ind, kernelDiff=kernelDiff, lowerNRange, upperNRange)
+np.savez('outfile', ind=ind, kernelDiff=kernelDiff, lowerNRange=lowerNRange, upperNRange=upperNRange)
 
 kern = plt.figure(1)
 plt.plot(timesteps,K,timesteps,realK)
