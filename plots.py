@@ -164,7 +164,7 @@ plt.legend()
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 
-kerneltimes=np.logspace(np.log10(timesteps[kernelplotindex]),np.log10(timesteps[-1]),1000)
+kerneltimes=np.logspace(np.log10(timesteps[kernelplotindex]),np.log10(timesteps[-1]),100000)
 #kerneltimes=np.linspace(timesteps[0],timesteps[-1],1000)
 Kernel = plt.figure(3)
 plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
