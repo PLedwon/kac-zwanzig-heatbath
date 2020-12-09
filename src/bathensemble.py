@@ -49,8 +49,8 @@ class bathensemble():
             omega_max=omega_min*self.N**1.66
 
         if self.diffType == 'super':
-            omega_min=self.N**(-0.845)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
-            omega_max=omega_min*self.N**1.0499999999999998
+            omega_min=self.N**(-1.02)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
+            omega_max=omega_min*self.N**1.22
 
         omega =np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
         #omega =np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
