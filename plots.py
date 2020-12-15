@@ -129,7 +129,7 @@ def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.20))
+startindex = int(math.floor((t1/dt)*0.00))
 plotindex = int(math.floor((t1/dt)*0.05))
 kernelplotindex = int(math.floor((t1/dt)*0.0))
 endindex = int(math.floor(t1/dt)*0.7)
@@ -171,8 +171,8 @@ plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
 plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
-plt.plot(timestepsErr, K[kerneltimes],label='Bath memory kernel',color='#FC9169')
-#plt.plot(timestepsErr,K[timeToIndexArray],label='Bath memory kernel',color='#FC9169' )
+#plt.plot(timestepsErr, K[kerneltimes],label='Bath memory kernel',color='#FC9169')
+plt.plot(timestepsErr,K[timeToIndexArray],label='Bath memory kernel',color='#FC9169' )
 #plt.errorbar(timestepsErr, np.abs(K[timeToIndexArray]),yerr=stdK, fmt='none',capsize=1.0,ecolor='#FC9169',elinewidth='0.7')
 plt.plot(kerneltimes,np.abs(memoryKernel(kerneltimes)),label='Theoretical memory kernel', linestyle=':')
 plt.xlabel('t')
