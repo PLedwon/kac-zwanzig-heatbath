@@ -96,7 +96,7 @@ else:
     timeToIndexArray=timeToIndexArray.astype(int)
 
 #log
-    timestepsErrLog=np.logspace(2.0,np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
+    timestepsErrLog=np.logspace(0.0,np.log10(timesteps[-indexSkipValue]) , num=errorbarCount)
     timeToIndexArrayLog=np.floor(1.0/dt*timestepsErrLog)
     timeToIndexArrayLog=timeToIndexArrayLog.astype(int)
 
