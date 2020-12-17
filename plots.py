@@ -55,7 +55,7 @@ if not glob.glob('../data/*.npz'):
     
             varQ += results['squaredQ'] - results['aveQ'] #not normalized yet
             varP += results['squaredP'] - results['aveP']
-            K    = results['K']
+            K    += results['K']
             print(results['maxEnergyError'])
             i+=1
             print(i)
