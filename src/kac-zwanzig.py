@@ -10,7 +10,7 @@ import scipy
 ########################################################################################################################
 #set parameters
 n=1#ensemble of baths that we average over
-N=20000 #number of bath oscillators
+N=16000 #number of bath oscillators
 beta=1.0 #1\kB*T
 Q0=0.0 #starting pos/impulse of distinguished particle
 P0=0.0
@@ -19,7 +19,7 @@ M=0.01# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
 t1=3000.0
-dt=0.0004#3.0/float(N)#(t1-t0)/100.0
+dt=0.1#0.0004#3.0/float(N)#(t1-t0)/100.0
 
 
 gamma=1.5
