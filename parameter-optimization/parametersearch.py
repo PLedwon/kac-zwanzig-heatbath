@@ -17,11 +17,12 @@ M=0.01# mass of the distinguished particle
 t0=0.1
 t1=3000.0
 #dt=0.0002#01.0/float(N)#(t1-t0)/100.0
-dt=0.1
+dt=2.0
+Omega=2.0
 gridsize = 4 #should be (M*10)-1 for nice values
 timesteps=np.arange(0.0,t1,dt)
-lowerNRange = np.linspace(-1.05,-0.95,gridsize)
-upperNRange = np.linspace(1.2,1.3,gridsize)
+lowerNRange = np.linspace(-0.95,-0.85,gridsize)
+upperNRange = np.linspace(1.15,1.25,gridsize)
 #lowerNRange =np.arange(-1.1,-0.9,0.1)
 #upperNRange =np.arange(0.8,1.3,0.1)
 cutoff = 10000
@@ -38,7 +39,6 @@ def computeMasses(omega):
   if diffType == 'sub':
        return oscMass * np.power(omega/np.amin(omega),gamma-3.0)
   if diffType == 'super':
-       Omega = 1.0
        return oscMass * np.power(omega/np.amin(omega),gamma-3.0)*np.exp(-omega/Omega)
 
 def setFrequencyRange(a,b):
@@ -61,7 +61,8 @@ def computeKernel(timesteps,k,omega):
 
 def memoryKernel(timesteps):
     if diffType == 'super':
-        result = np.cos((gamma)*np.arctan(timesteps))*np.power(np.power(timesteps,2)+1,-gamma/2.0)
+        #result = np.cos((gamma)*np.arctan(timesteps*Omega))*np.power(np.power(Omega*timesteps,2)+1,-gamma/2.0)
+        result = np.cos((gamma)*np.arctan(timesteps*Omega))*np.power(np.power(timesteps/Omega,2)+1,-gamma/2.0)
         result *= 1.0/np.sum(result)
         return result
 
@@ -105,7 +106,7 @@ k=np.multiply(masses,np.power(omega,2)) # compute spring constants
 K = computeKernel(timesteps,k,omega)
 realK = memoryKernel(timesteps)
 
-np.savez('outfile', ind=ind, kernelDiff=kernelDiff, lowerNRange=lowerNRange, upperNRange=upperNRange)
+#np.savez('parameters', ind=ind, kernelDiff=kernelDiff, lowerNRange=lowerNRange, upperNRange=upperNRange)
 
 kern = plt.figure(1)
 plt.plot(timesteps,K,timesteps,realK)
