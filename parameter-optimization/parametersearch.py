@@ -16,9 +16,9 @@ M=0.01# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
 t1=3000.0
-dt=0.0002#01.0/float(N)#(t1-t0)/100.0
-#dt=5.5
-gridsize = 6
+#dt=0.0002#01.0/float(N)#(t1-t0)/100.0
+dt=5.0
+gridsize = 9 #should be (M*10)-1 for nice values
 timesteps=np.arange(0.0,t1,dt)
 lowerNRange = np.linspace(-1.1,-0.9,gridsize)
 upperNRange = np.linspace(0.9,1.3,gridsize)
@@ -55,7 +55,7 @@ def setFrequencyRange(a,b):
 def computeKernel(timesteps,k,omega):
         K = np.zeros(timesteps.size)
         for i in range(0,timesteps.size):
-            K[i]= np.sum(np.multiply(k,np.cos(omega*timesteps[i])))
+            K[i]= np.dot(k,np.cos(omega*timesteps[i]))
         K *= 1.0/np.sum(K)
         return K
 
@@ -113,11 +113,14 @@ plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 kern.savefig("MemoryKernel.pdf")
 
-timesteps=np.arange(0,t1,1.0)
-K = computeKernel(timesteps,k,omega)
-realK = memoryKernel(timesteps)
+timestepsLog=np.logspace(0.0,np.log10(timesteps[-1]),2000)#np.arange(0,t1,1.0)
+
+
+
+K = computeKernel(timestepsLog,k,omega)
+realK = memoryKernel(timestepsLog)
 kernlog = plt.figure(2)
-plt.plot(timesteps,np.abs(K),timesteps,np.abs(realK))
+plt.plot(timestepsLog,np.abs(K),timestepsLog,np.abs(realK))
 plt.xlabel('t')
 plt.xscale('log')
 plt.yscale('log')

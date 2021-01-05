@@ -71,7 +71,7 @@ class bathensemble():
 
         self.singleBathK_N = np.zeros(self.timesteps.size)
         for i in range(0,self.timesteps.size):
-            self.singleBathK_N[i]= np.sum(np.multiply(k,np.cos(omega*self.timesteps[i])))
+            self.singleBathK_N[i]= np.dot(k,np.cos(omega*self.timesteps[i]))
         self.singleBathK_N *= 1.0/np.sum(self.singleBathK_N)
 
 
