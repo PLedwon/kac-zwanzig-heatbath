@@ -7,6 +7,7 @@ import scipy
 from scipy.optimize import curve_fit
 
 Omega=1.0
+errorbarCount = 100
 
 if not glob.glob('../data/*.npz'):
 
@@ -27,7 +28,6 @@ if not glob.glob('../data/*.npz'):
     errorFileCount=0
     
     
-    errorbarCount = 2000
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[0::indexSkipValue]
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
@@ -87,7 +87,6 @@ else:
     #Omega=data['Omega']
     
 #linear 
-    errorbarCount = 100
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
     timestepsErr=timesteps[0::indexSkipValue]
     timeToIndexArray=np.floor(1.0/dt*timestepsErr)
@@ -141,7 +140,7 @@ var = plt.figure(1)
 plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
 plt.plot(timesteps[plotindex::8000],varQ[plotindex::8000],label='Numerical results', color='#FC9169')
-plt.errorbar(timestepsErrLog, varQ[timeToIndexArrayLog],yerr=std, fmt='none',capsize=1.0,ecolor='#FC9169')
+#plt.errorbar(timestepsErrLog, varQ[timeToIndexArrayLog],yerr=std, fmt='none',capsize=1.0,ecolor='#FC9169')
 plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
 plt.errorbar(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='#009900',label=r'$\propto t$')
 plt.xlabel('t')
@@ -153,7 +152,7 @@ var = plt.figure(2)
 plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
 plt.plot(timesteps[::8000],varQ[::8000],label='Numerical results',color='#FC9169' )
-plt.errorbar(timestepsErr, varQ[timeToIndexArray], yerr=std, fmt='none',capsize=1.0 ,ecolor='#FC9169')
+#plt.errorbar(timestepsErr, varQ[timeToIndexArray], yerr=std, fmt='none',capsize=1.0 ,ecolor='#FC9169')
 plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),label=r'$\propto t^{1.5}$',color='#0066FF', linestyle='--')
 plt.plot(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),label=r'$\propto t$', linestyle=':',color='#009900')
 plt.xlabel('t')
