@@ -188,6 +188,7 @@ plt.plot(timestepsErr, K[timeToIndexArray],label='Bath memory kernel',color='#FC
 plt.plot(timestepsErr, memoryKernel(timestepsErr),label='Theoretical memory kernel', linestyle=':')
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
+plt.legend()
 kernelLin.savefig("./img/KLin.pdf",bbox_inches='tight')
 
 #print(K[0])
