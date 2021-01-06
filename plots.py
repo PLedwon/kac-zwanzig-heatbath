@@ -108,7 +108,7 @@ else:
 def memoryKernel(times):
     if diffType == 'super':
         result = np.cos((gamma)*np.arctan(Omega*times))*np.power(np.power(times*Omega,-2)+1,-gamma/2.0)*np.power(times,-gamma)
-        result *= -1.0/np.sum(result)
+        result *= 1.0/np.sum(result)
         return result
 
     if diffType == 'sub':
