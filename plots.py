@@ -184,7 +184,7 @@ plt.xscale('linear')
 plt.yscale('linear')
 plt.plot(timestepsErr, K[timeToIndexArray])
 plt.plot(timestepsErr, memoryKernel(timestepsErr))
-Kernel.savefig("./img/KLin.pdf",bbox_inches='tight')
+kernelLin.savefig("./img/KLin.pdf",bbox_inches='tight')
 
 #print(K[0])
 
