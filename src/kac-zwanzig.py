@@ -20,7 +20,9 @@ M=0.01# mass of the distinguished particle
 t0=0.1
 t1=3000.0
 dt=0.1#0.0004#3.0/float(N)#(t1-t0)/100.0
-
+Omega=1.0
+omega_min=N**(-1.0175)
+omega_max=omega_min*N**1.275
 
 gamma=1.5
 
@@ -34,6 +36,6 @@ startstr='Starting Simulation, averaging over ' + str(n) + ' heatbaths with '+ s
 print(startstr)
 
 
-ensemble1 = bathensemble(n,N,beta,Q0,P0,oscMass,M,t0,t1,dt,gamma,diffType)
+ensemble1 = bathensemble(n,N,beta,Q0,P0,oscMass,M,t0,t1,dt,gamma,diffType,Omega,omega_min,omega_max)
 ensemble1.averageEnsemble()
 

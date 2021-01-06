@@ -6,11 +6,7 @@ import math
 import scipy
 from scipy.optimize import curve_fit
 
-#def moving_average(a, n=3) :
-#    ret = np.cumsum(a, dtype=float)
-#    ret[n:] = ret[n:] - ret[:-n]
-#    return ret[n - 1:] / n
-
+Omega=1.0
 
 if not glob.glob('../data/*.npz'):
 
@@ -26,6 +22,7 @@ if not glob.glob('../data/*.npz'):
     t1=data['t1']
     dt=data['dt']
     gamma=data['gamma']
+#    Omega=data['Omega']
     maxEError=0
     errorFileCount=0
     
@@ -87,6 +84,7 @@ else:
     t1=data['t1']
     dt=data['dt']
     gamma=data['gamma']
+    #Omega=data['Omega']
     
 #linear 
     errorbarCount = 100
@@ -110,7 +108,7 @@ else:
 
 def memoryKernel(times):
     if diffType == 'super':
-        result = np.cos((gamma)*np.arctan(times))*np.power(np.power(times,2)+1,-gamma/2.0)
+        result = np.cos((gamma)*np.arctan(Omega*times))*np.power(np.power(times*Omega,-2)+1,-gamma/2.0)*np.power(times,-gamma)
         result *= -1.0/np.sum(result)
         return result
 
@@ -164,7 +162,7 @@ plt.legend()
 var.savefig("./img/varQ.pdf",bbox_inches='tight')
 
 
-kerneltimes=np.logspace(np.log10(timesteps[kernelplotindex]),np.log10(timesteps[-1]),100000)
+kerneltimes=np.logspace(np.log10(timesteps[kernelplotindex]),np.log10(timesteps[-1]),10000)
 #kerneltimes=np.linspace(timesteps[0],timesteps[-1],1000)
 Kernel = plt.figure(3)
 plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
@@ -178,7 +176,15 @@ plt.plot(kerneltimes,np.abs(memoryKernel(kerneltimes)),label='Theoretical memory
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 plt.legend()
-Kernel.savefig("./img/K.pdf",bbox_inches='tight')
-print(K[0])
+Kernel.savefig("./img/KLog.pdf",bbox_inches='tight')
+
+kernelLin = plt.figure(4)
+kerneltimes=np.linspace(timesteps[0],timesteps[-1],10000)
+plt.plot(timestepsErr, K[timeToIndexArray])
+plt.plot(timestepsErr, memoryKernel(timestepsErr))
+Kernel.savefig("./img/KLin.pdf",bbox_inches='tight')
+
+
+#print(K[0])
 
 #plt.show()

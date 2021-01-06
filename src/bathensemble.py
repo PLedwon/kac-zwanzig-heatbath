@@ -4,7 +4,7 @@ from cmath import *
 from heatbath import *
 
 class bathensemble():
-    def __init__(self,n,N,beta,Q0,P0,oscMass,M,t0,t1,dt,gamma,diffType):
+    def __init__(self,n,N,beta,Q0,P0,oscMass,M,t0,t1,dt,gamma,diffType,Omega,omega_min,omega_max):
 
         self.n = n # number of baths in the ensemble
         self.N=N #number of bath oscillators
@@ -19,9 +19,13 @@ class bathensemble():
         self.gamma=gamma
         self.timesteps=np.arange(self.t0,self.t1,self.dt)
         self.diffType = diffType
+        self.Omega = Omega
+        self.omega_min=omega_min
+        self.omega_max=omega_max
         self.K_N=np.zeros(self.timesteps.size) # memory kernel value at every timestep
         self.K = np.zeros(self.timesteps.size)
         self.singleBathK_N = np.zeros(self.timesteps.size)
+        
 
 
         self.aveQ=np.zeros(self.timesteps.size)
@@ -37,20 +41,10 @@ class bathensemble():
             return self.oscMass * np.power(omega/np.amin(omega),self.gamma-3.0)#np.power(omega,1.0-self.alpha)*self.N**(self.a-1)
 
         if self.diffType == 'super':
-            Omega = 1.0
-            return self.oscMass * np.power(omega/np.amin(omega),self.gamma-3.0)*np.exp(-omega/Omega)#np.power(omega,self.alpha)*np.exp(-omega*1.0/Omega)*self.N**(self.a-1)
+            return self.oscMass * np.power(omega/np.amin(omega),self.gamma-3.0)*np.exp(-omega/self.Omega)#np.power(omega,self.alpha)*np.exp(-omega*1.0/Omega)*self.N**(self.a-1)
 
 
     def simulateSingleBath(self):
-        #generate characteristic frequencies from a uniform distribution
-
-        if self.diffType == 'sub':
-            omega_min=self.N**(-1.0)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
-            omega_max=omega_min*self.N**1.66
-
-        if self.diffType == 'super':
-            omega_min=self.N**(-1.05)#(-self.c) #gives only the boundary to the prob distr. of frequencies, actual lowest frequency can be bigger
-            omega_max=omega_min*self.N**1.2666666666666666
 
         omega =np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
         #omega =np.random.uniform(omega_min,omega_max,self.N) #np.linspace(omega_min,omega_max,num=self.N)#np.random.uniform(omega_min,omega_max,self.N)
@@ -111,4 +105,4 @@ class bathensemble():
         print(self.maxMomentumError)
 
         name = str(np.floor(np.random.uniform(0,999999,1)))
-        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, K=self.K, gamma=self.gamma, avgEnergyError=self.avgEnergyError)
+        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, K=self.K, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega)
