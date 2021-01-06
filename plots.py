@@ -180,11 +180,11 @@ Kernel.savefig("./img/KLog.pdf",bbox_inches='tight')
 
 kernelLin = plt.figure(4)
 kerneltimes=np.linspace(timesteps[0],timesteps[-1],10000)
+plt.xscale('linear')
+plt.yscale('linear')
 plt.plot(timestepsErr, K[timeToIndexArray])
 plt.plot(timestepsErr, memoryKernel(timestepsErr))
 Kernel.savefig("./img/KLin.pdf",bbox_inches='tight')
-plt.xscale('linear', nonposx="clip")
-plt.yscale('linear', nonposy="clip")
 
 #print(K[0])
 
