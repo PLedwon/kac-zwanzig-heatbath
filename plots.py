@@ -18,12 +18,14 @@ if not glob.glob('../data/*.npz'):
     varP=np.zeros(np.size(data['squaredP']))
     aveQ=np.zeros(np.size(data['aveQ']))
     aveP=np.zeros(np.size(data['aveP']))
-    K=np.zeros(np.size(data['K']))
+    #K=np.zeros(np.size(data['K']))
     timesteps=data['timesteps']
     t1=data['t1']
     dt=data['dt']
     gamma=data['gamma']
 #    Omega=data['Omega']
+    k=data['k']
+    omega=data['omega']
     maxEError=0
     errorFileCount=0
     
@@ -48,27 +50,27 @@ if not glob.glob('../data/*.npz'):
     for file in resultList:
             results = np.load(file)
             stdMat[:,i] = results['squaredQ'][timeToIndexArray] - results['aveQ'][timeToIndexArray]
-            stdMatK[:,i] = results['K'][timeToIndexArray] 
+    #        stdMatK[:,i] = results['K'][timeToIndexArray] 
     
             varQ += results['squaredQ'] - results['aveQ'] #not normalized yet
             varP += results['squaredP'] - results['aveP']
-            K    += results['K']
+    #        K    += results['K']
             print(results['maxEnergyError'])
             i+=1
             print(i)
     
     std = np.std(stdMat, axis=1)
-    stdK = np.std(stdMatK, axis=1)
+    #stdK = np.std(stdMatK, axis=1)
 #    print(np.sum(K))
-    K*=1.0/np.sum(K)
+    #K*=1.0/np.sum(K)
     #K=moving_average(K,1000)    
     norm=1.0/(float(len(resultList)))
     varQ *= norm
     varP *= norm
     std  *= norm
-    stdK  *= norm
+#    stdK  *= norm
 
-    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, stdK=stdK, varP=varP, K=K, t1=t1, dt=dt, gamma=gamma)
+    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, t1=t1, dt=dt, gamma=gamma,k=k,omega=omega)
 
 
 else: 
@@ -79,12 +81,15 @@ else:
     timesteps=data['timesteps']
     std  = data['std']
     varP = data['varP']
-    K    = data['K']
-    stdK = data['stdK']
+    #K    = data['K']
+    #stdK = data['stdK']
     t1=data['t1']
     dt=data['dt']
     gamma=data['gamma']
     #Omega=data['Omega']
+    k=data['k']
+    omega=data['omega']
+
     
 #linear 
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
@@ -115,6 +120,14 @@ def memoryKernel(times):
         result = np.power(times,-gamma)*np.power(scipy.special.gamma(gamma+1)*np.cos(0.5*np.pi*(gamma+1)),-1)
         result *= 1.0/np.sum(result)
         return result
+
+
+def computeKernel(k,omega,timesteps):
+        K=np.zeros(timesteps.size)
+        for i in range(0,timesteps.size):
+            K[i] = np.dot(k,np.cos(omega*timesteps[i]))
+        return 1.0/np.sum(K)*K
+    
 
 #def theoDiff(times, gamma, fitindex):
 #        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
@@ -168,9 +181,9 @@ plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
 plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
-plt.plot(timestepsErrLog, np.abs(K[timeToIndexArrayLog]),label='Bath memory kernel',color='#FC9169')
-#plt.plot(timestepsErr,K[timeToIndexArray],label='Bath memory kernel',color='#FC9169' )
+#plt.plot(timestepsErrLog, np.abs(K[timeToIndexArrayLog]),label='Bath memory kernel',color='#FC9169')
 #plt.errorbar(timestepsErr, np.abs(K[timeToIndexArray]),yerr=stdK, fmt='none',capsize=1.0,ecolor='#FC9169',elinewidth='0.7')
+plt.plot(kerneltimes, np.abs(computeKernel(k,omega,kerneltimes)),label='Bath memory kernel',color='#FC9169')
 plt.plot(kerneltimes,np.abs(memoryKernel(kerneltimes)),label='Theoretical memory kernel', linestyle=':')
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')
@@ -183,7 +196,7 @@ plt.xscale('linear')
 plt.yscale('linear')
 plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
-plt.plot(timestepsErr, K[timeToIndexArray],label='Bath memory kernel',color='#FC9169')
+#plt.plot(timestepsErr, K[timeToIndexArray],label='Bath memory kernel',color='#FC9169')
 plt.plot(timestepsErr, memoryKernel(timestepsErr),label='Theoretical memory kernel', linestyle=':')
 plt.xlabel('t')
 plt.ylabel('Memory Kernel')

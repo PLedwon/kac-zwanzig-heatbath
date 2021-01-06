@@ -47,10 +47,12 @@ class bathensemble():
     def simulateSingleBath(self):
 
         omega =np.linspace(self.omega_min,self.omega_max,num=self.N)
+        self.omega=omega
         #omega =np.random.uniform(omega_min,omega_max,self.N) 
 
         masses = self.computeMasses(omega)
         k=np.multiply(masses,np.power(omega,2)) # compute spring constants
+        self.k=k
         #fig=plt.figure(3)
         #plt.hist(k,200)
 
@@ -63,10 +65,10 @@ class bathensemble():
         y0=np.hstack([self.Q0,self.P0,q0,p0])
         self.singleBath = heatbath(self.N,y0,k,masses,self.M,self.t0,self.t1,self.dt)
 
-        self.singleBathK_N = np.zeros(self.timesteps.size)
-        for i in range(0,self.timesteps.size):
-            self.singleBathK_N[i]= np.dot(k,np.cos(omega*self.timesteps[i]))
-        self.singleBathK_N *= 1.0/np.sum(self.singleBathK_N)
+       # self.singleBathK_N = np.zeros(self.timesteps.size)
+       # for i in range(0,self.timesteps.size):
+       #     self.singleBathK_N[i]= np.dot(k,np.cos(omega*self.timesteps[i]))
+       # self.singleBathK_N *= 1.0/np.sum(self.singleBathK_N)
 
 
     def averageEnsemble(self):
@@ -82,7 +84,7 @@ class bathensemble():
             self.squaredQ += 1.0/float(self.n) *np.power(self.singleBath.Q,2)
             self.squaredP += 1.0/float(self.n) *np.power(self.singleBath.P,2)
 
-            self.K = self.singleBathK_N
+            #self.K = self.singleBathK_N
             #self.K += 1.0/float(self.n) * self.singleBathK_N
             self.avgEnergyError +=1.0/float(self.n) *self.singleBath.avgEnergyError
 
@@ -106,4 +108,4 @@ class bathensemble():
         print(self.maxMomentumError)
 
         name = str(np.floor(np.random.uniform(0,999999,1)))
-        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, K=self.K, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega)
+        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega, omega=self.omega,k=self.k)
