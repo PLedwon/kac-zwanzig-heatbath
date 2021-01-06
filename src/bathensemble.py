@@ -82,7 +82,8 @@ class bathensemble():
             self.squaredQ += 1.0/float(self.n) *np.power(self.singleBath.Q,2)
             self.squaredP += 1.0/float(self.n) *np.power(self.singleBath.P,2)
 
-            self.K += 1.0/float(self.n) * self.singleBathK_N
+            self.K = self.singleBathK_N
+            #self.K += 1.0/float(self.n) * self.singleBathK_N
             self.avgEnergyError +=1.0/float(self.n) *self.singleBath.avgEnergyError
 
             if self.maxEnergyError<self.singleBath.maxEnergyError:
