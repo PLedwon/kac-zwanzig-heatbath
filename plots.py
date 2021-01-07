@@ -215,6 +215,6 @@ energy.savefig("./img/energy.pdf",bbox_inches='tight')
 momentum = plt.figure(6)
 plt.plot(momentumError, label='Momentum error')
 plt.legend()
-energy.savefig("./img/momentum.pdf",bbox_inches='tight')
+momentum.savefig("./img/momentum.pdf",bbox_inches='tight')
 
 #plt.show()
