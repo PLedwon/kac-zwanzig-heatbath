@@ -93,6 +93,9 @@ class bathensemble():
 
             if self.maxMomentumError<self.singleBath.maxMomentumError:
                 self.maxMomentumError=self.singleBath.maxMomentumError
+            
+            self.energyError = self.singleBath.energyError
+            self.momentumError = self.singleBath.momentumError
 
 
         #self.varQ = self.squaredQ - np.power(self.aveQ,2)
@@ -108,4 +111,4 @@ class bathensemble():
         print(self.maxMomentumError)
 
         name = str(np.floor(np.random.uniform(0,999999,1)))
-        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega, omega=self.omega,k=self.k)
+        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega, omega=self.omega,k=self.k,energyError=self.energyError, momentumError=self.momentumError)

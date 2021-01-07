@@ -28,6 +28,9 @@ if not glob.glob('../data/*.npz'):
     omega=data['omega']
     maxEError=0
     errorFileCount=0
+
+    energyError=data['energyError']
+    momentumError=data['momentumError']
     
     
     indexSkipValue = int(1.0/dt * t1/float(errorbarCount))
@@ -70,7 +73,7 @@ if not glob.glob('../data/*.npz'):
     std  *= norm
 #    stdK  *= norm
 
-    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, t1=t1, dt=dt, gamma=gamma,k=k,omega=omega)
+    #np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, t1=t1, dt=dt, gamma=gamma,k=k,omega=omega)
 
 
 else: 
@@ -203,6 +206,15 @@ plt.ylabel('Memory Kernel')
 plt.legend()
 kernelLin.savefig("./img/KLin.pdf",bbox_inches='tight')
 
-#print(K[0])
+
+energy = plt.figure(5)
+plt.plot(energyError, label='Energy error')
+plt.legend()
+energy.savefig("./img/energy.pdf",bbox_inches='tight')
+
+momentum = plt.figure(6)
+plt.plot(momentumError, label='Momentum error')
+plt.legend()
+energy.savefig("./img/momentum.pdf",bbox_inches='tight')
 
 #plt.show()
