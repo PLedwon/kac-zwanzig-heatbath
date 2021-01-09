@@ -46,9 +46,9 @@ class bathensemble():
 
     def simulateSingleBath(self):
 
-        omega =np.linspace(self.omega_min,self.omega_max,num=self.N)
+#        omega =np.linspace(self.omega_min,self.omega_max,num=self.N)
+        omega =np.random.uniform(omega_min,omega_max,self.N) 
         self.omega=omega
-        #omega =np.random.uniform(omega_min,omega_max,self.N) 
 
         masses = self.computeMasses(omega)
         k=np.multiply(masses,np.power(omega,2)) # compute spring constants

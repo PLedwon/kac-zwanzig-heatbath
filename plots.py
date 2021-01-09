@@ -73,7 +73,7 @@ if not glob.glob('../data/*.npz'):
     std  *= norm
 #    stdK  *= norm
 
-    #np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, t1=t1, dt=dt, gamma=gamma,k=k,omega=omega)
+    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, t1=t1, dt=dt, gamma=gamma,k=k,omega=omega)
 
 
 else: 
