@@ -47,7 +47,7 @@ class bathensemble():
     def simulateSingleBath(self):
 
 #        omega =np.linspace(self.omega_min,self.omega_max,num=self.N)
-        omega =np.random.uniform(omega_min,omega_max,self.N) 
+        omega =np.random.uniform(self.omega_min,self.omega_max,self.N) 
         self.omega=omega
 
         masses = self.computeMasses(omega)
@@ -111,4 +111,4 @@ class bathensemble():
         print(self.maxMomentumError)
 
         name = str(np.floor(np.random.uniform(0,999999,1)))
-        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega, omega=self.omega,k=self.k,energyError=self.energyError, momentumError=self.momentumError)
+        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega, omega=self.omega,k=self.k)
