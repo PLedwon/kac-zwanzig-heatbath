@@ -136,7 +136,7 @@ def computeKernel(k,omega,timesteps):
 #        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
 
 def theoDiff(x,a,c):
-    return a*np.power(x,gamma)+c
+    return a*np.power(x,1.3)+c
 
 def linDiff(x,a,c):
     return a*x+c
