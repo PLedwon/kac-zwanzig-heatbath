@@ -46,8 +46,8 @@ class bathensemble():
 
     def simulateSingleBath(self):
 
-#        omega =np.linspace(self.omega_min,self.omega_max,num=self.N)
-        omega =np.random.uniform(self.omega_min,self.omega_max,self.N) 
+        omega =np.linspace(self.omega_min,self.omega_max,num=self.N)
+#        omega =np.random.uniform(self.omega_min,self.omega_max,self.N) 
         self.omega=omega
 
         masses = self.computeMasses(omega)
