@@ -135,8 +135,8 @@ def computeKernel(k,omega,timesteps):
 #def theoDiff(times, gamma, fitindex):
 #        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
 
-def theoDiff(x,a,c):
-    return a*np.power(x,1.0)+c
+def theoDiff(x,a,b,c):
+    return a*np.power(x,b)+c
 
 def linDiff(x,a,c):
     return a*x+c
@@ -157,7 +157,7 @@ plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
 plt.plot(timesteps[plotindex::8000],varQ[plotindex::8000],label='Numerical results', color='#FC9169')
 #plt.errorbar(timestepsErrLog, varQ[timeToIndexArrayLog],yerr=std, fmt='none',capsize=1.0,ecolor='#FC9169')
-plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
+plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1],popt[2]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
 plt.errorbar(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='#009900',label=r'$\propto t$')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
@@ -169,7 +169,7 @@ plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0), useMathText=True)
 plt.ticklabel_format(axis="y", style="sci", scilimits=(0,0), useMathText=True)
 plt.plot(timesteps[::8000],varQ[::8000],label='Numerical results',color='#FC9169' )
 #plt.errorbar(timestepsErr, varQ[timeToIndexArray], yerr=std, fmt='none',capsize=1.0 ,ecolor='#FC9169')
-plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1]),label=r'$\propto t^{1.5}$',color='#0066FF', linestyle='--')
+plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1],popt[2]),label=r'$\propto t^{1.5}$',color='#0066FF', linestyle='--')
 plt.plot(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),label=r'$\propto t$', linestyle=':',color='#009900')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
