@@ -142,10 +142,10 @@ def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.30))
+startindex = int(math.floor((t1/dt)*0.00))
 plotindex = int(math.floor((t1/dt)*0.05))
 kernelplotindex = int(math.floor((t1/dt)*0.0))
-endindex = int(math.floor(t1/dt)*0.9)
+endindex = int(math.floor(t1/dt)*0.99)
 linindex = int(math.floor(t1/dt)*0.8)
 popt, pcov = curve_fit(theoDiff, timesteps[startindex:endindex:2000],varQ[startindex:endindex:2000])
 linpopt, linpcov = curve_fit(linDiff, timesteps[endindex::2000],varQ[endindex::2000])
