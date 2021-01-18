@@ -142,8 +142,8 @@ def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.00))
-plotindex = int(math.floor((t1/dt)*0.02))
+startindex = int(math.floor((t1/dt)*0.01))
+plotindex = int(math.floor((t1/dt)*0.01))
 kernelplotindex = int(math.floor((t1/dt)*0.0))
 endindex = int(math.floor(t1/dt)*0.99)
 linindex = int(math.floor(t1/dt)*0.8)
@@ -157,7 +157,7 @@ plt.xscale('log', nonposx="clip")
 plt.yscale('log', nonposy="clip")
 plt.plot(timesteps[plotindex::8000],varQ[plotindex::8000],label='Numerical results', color='#FC9169')
 #plt.errorbar(timestepsErrLog, varQ[timeToIndexArrayLog],yerr=std, fmt='none',capsize=1.0,ecolor='#FC9169')
-plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1],popt[2]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.5}$')
+plt.plot(timesteps[startindex:endindex:8000],theoDiff(timesteps[startindex:endindex:8000],popt[0],popt[1],popt[2]), color='#0066FF',linestyle='--',label=r'$\propto t^{1.93}$')
 #plt.errorbar(timesteps[linindex::80000],linDiff(timesteps[linindex::80000],linpopt[0],linpopt[1]),linestyle=':',color='#009900',label=r'$\propto t$')
 plt.xlabel('t')
 plt.ylabel('Var(Q)')
