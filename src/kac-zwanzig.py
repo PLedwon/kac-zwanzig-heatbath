@@ -18,13 +18,13 @@ oscMass=1.0 #1.0 #mass of heaviest bath oscillator
 M=0.5# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
-t1=3000.0
+t1=1500.0
 dt=0.0001#0.0004#3.0/float(N)#(t1-t0)/100.0
 Omega=1.0
-omega_min=N**(-1.0175)
-omega_max=omega_min*N**1.275
+omega_min=N**(-0.901)
+omega_max=omega_min*N**1.173
 
-gamma=1.5
+gamma=1.9
 
 if gamma>1.0:
     diffType='super'
