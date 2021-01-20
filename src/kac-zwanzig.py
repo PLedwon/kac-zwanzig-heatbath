@@ -21,10 +21,10 @@ t0=0.1
 t1=2500.0
 dt=0.00015#0.0004#3.0/float(N)#(t1-t0)/100.0
 Omega=1.0
-omega_min=N**(-0.901)
-omega_max=omega_min*N**1.173
+omega_min=N**(-0.8195)
+omega_max=omega_min*N**1.059
 
-gamma=1.9
+gamma=1.2
 
 if gamma>1.0:
     diffType='super'
