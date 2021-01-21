@@ -142,8 +142,8 @@ def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.50))
-plotindex = int(math.floor((t1/dt)*0.50))
+startindex = int(math.floor((t1/dt)*0.60))
+plotindex = int(math.floor((t1/dt)*0.60))
 kernelplotindex = int(math.floor((t1/dt)*0.0))
 endindex = int(math.floor(t1/dt)*0.99)
 linindex = int(math.floor(t1/dt)*0.8)
