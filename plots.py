@@ -136,14 +136,14 @@ def computeKernel(k,omega,timesteps):
 #        return np.power(times,gamma) * varQ[fitindex]/np.power(times[fitindex],gamma)
 
 def theoDiff(x,a,b,c):
-    return a*np.power(x,1.2)+c
+    return a*np.power(x,1.2)#+c
 
 def linDiff(x,a,c):
     return a*x+c
 
 
-startindex = int(math.floor((t1/dt)*0.60))
-plotindex = int(math.floor((t1/dt)*0.60))
+startindex = int(math.floor((t1/dt)*0.20))
+plotindex = int(math.floor((t1/dt)*0.20))
 kernelplotindex = int(math.floor((t1/dt)*0.0))
 endindex = int(math.floor(t1/dt)*0.99)
 linindex = int(math.floor(t1/dt)*0.8)
