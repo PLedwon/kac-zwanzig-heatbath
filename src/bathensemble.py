@@ -59,7 +59,7 @@ class bathensemble():
         #generate starting positions/impulses for oscillators
         q0 = self.Q0 + np.power(self.beta,-0.5)*np.multiply(np.power(k,-0.5),np.random.standard_normal(self.N))
         p0 = np.power(self.beta,-0.5)*np.multiply(np.power(masses,0.5),np.random.standard_normal(self.N))
-        p0 -= np.average(p0)-1/float(N)*self.P0
+        p0 -= np.average(p0)-1/float(self.N)*self.P0
 
         # cast initial values into one array
         y0=np.hstack([self.Q0,self.P0,q0,p0])

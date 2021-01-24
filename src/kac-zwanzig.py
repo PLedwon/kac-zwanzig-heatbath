@@ -12,10 +12,10 @@ import scipy
 n=1#ensemble of baths that we average over
 N=16000 #number of bath oscillators
 beta=0.1 #1\kB*T
+M=0.005# mass of the distinguished particle
 Q0=0 #starting pos/impulse of distinguished particle
 P0=np.power(beta,-0.5)*np.power(M,0.5)*np.random.standard_normal(1)
 oscMass=1.0 #1.0 #mass of heaviest bath oscillator
-M=0.005# mass of the distinguished particle
 #masses=m*np.ones(N)
 t0=0.1
 t1=3000.0
