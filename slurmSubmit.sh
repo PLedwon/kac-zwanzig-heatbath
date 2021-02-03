@@ -53,10 +53,3 @@ srun python3 ./src/kac-zwanzig.py &
 srun python3 ./src/kac-zwanzig.py &	
 srun python3 ./src/kac-zwanzig.py &	
 srun python3 ./src/kac-zwanzig.py &	
-srun python3 ./src/kac-zwanzig.py &	
-srun python3 ./src/kac-zwanzig.py &	
-srun python3 ./src/kac-zwanzig.py &	
-srun python3 ./src/kac-zwanzig.py &	
-srun python3 ./src/kac-zwanzig.py &	
-srun python3 ./src/kac-zwanzig.py &	
-
