@@ -7,29 +7,32 @@ import scipy
 from scipy.optimize import curve_fit
 
 Omega=1.0
-errorbarCount = 100
+#errorbarCount = 100
 
 if not glob.glob('../data/*.npz'):
 
     resultList = glob.glob('/users/stud/ledwon/Documents/npzFiles/*.np[yz]')
     
     data=np.load(resultList[0])
-    varQ=np.zeros(np.size(data['squaredQ']))
-    varP=np.zeros(np.size(data['squaredP']))
-    aveQ=np.zeros(np.size(data['aveQ']))
-    aveP=np.zeros(np.size(data['aveP']))
+    Q=np.zeros(np.size(data['Q']))
+    P=np.zeros(np.size(data['P']))
+
+#    aveQ=np.zeros(np.size(data['aveQ']))
+ #   aveP=np.zeros(np.size(data['aveP']))
+
     #K=np.zeros(np.size(data['K']))
     timesteps=data['timesteps']
     t1=data['t1']
     dt=data['dt']
-    gamma=data['gamma']
+#    gamma=data['gamma']
 #    Omega=data['Omega']
-    k=data['k']
-    omega=data['omega']
+#   k=data['k']
+#    omega=data['omega']
     maxEError=0
     errorFileCount=0
 
-#    energyError=data['energyError']
+    avgEnergyError=data['avgEnergyError']
+    avgMomentumError=data['avgMomentumError']
 #    momentumError=data['momentumError']
     
     
