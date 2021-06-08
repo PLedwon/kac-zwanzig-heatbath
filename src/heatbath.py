@@ -51,33 +51,30 @@ class heatbath():
 #symplectic euler version
     def solve_ivp(self):
 
-        self.q=np.zeros((self.N,2))
-        self.p=np.zeros((self.N,2))
+        self.q=np.zeros((self.N,1))
+        self.p=np.zeros((self.N,1))
         self.Q=np.zeros(len(self.timesteps))
         self.P=np.zeros(len(self.timesteps))
 
-        self.q[:,0]=self.y0[2:self.N+2]
-        self.p[:,0]=self.y0[self.N+2:2*self.N+2]
+        self.q=self.y0[2:self.N+2]
+        self.p=self.y0[self.N+2:2*self.N+2]
         self.Q[0]=self.y0[0]
         self.P[0]=self.y0[1]
 
         self.energy[0]=self.initialEnergy
-        self.momentum[0]=np.sum(self.p[:,0])+self.P[0]
+        self.momentum[0]=np.sum(self.p)+self.P[0]
         #self.energyE
     #semi-implicit Euler-scheme, might be replaced by an other integrator
     #impulses get updated first
         for i in range(0,len(self.timesteps)-1): #Hamilton eom in the euler scheme
-            self.p[:,1] = self.p[:,0] - np.multiply(self.k,self.q[:,0]-self.Q[i]) *self.dt
-            self.P[i+1]   = self.P[i]   + np.inner(self.k,self.q[:,0]-self.Q[i])    *self.dt
+            self.p = self.p - np.multiply(self.k,self.q-self.Q[i]) *self.dt
+            self.P[i+1]   = self.P[i]   + np.inner(self.k,self.q-self.Q[i])    *self.dt
             self.Q[i+1]   = self.Q[i]   + self.P[i+1]                               *self.dt
-            self.q[:,1] = self.q[:,0] + np.multiply(self.p[:,1],self.invm)      *self.dt
+            self.q = self.q + np.multiply(self.p,self.invm)      *self.dt
 
             #energies and momentum errors
-            self.energy[i+1] = 0.5*(self.invM*np.power(self.P[i],2)+ np.inner(self.invm,np.power(self.p[:,0],2)) +  np.inner(self.k,np.power((self.q[:,0]-self.Q[i]),2)))
-            self.momentum[i+1] = np.sum(self.p[:,0]) + self.P[i]
-
-            self.p[:,0]=self.p[:,1]
-            self.q[:,0]=self.q[:,1]
+            self.energy[i+1] = 0.5*(self.invM*np.power(self.P[i],2)+ np.inner(self.invm,np.power(self.p,2)) +  np.inner(self.k,np.power((self.q-self.Q[i]),2)))
+            self.momentum[i+1] = np.sum(self.p) + self.P[i]
 
 ##############################################
 
