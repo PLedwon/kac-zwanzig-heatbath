@@ -56,10 +56,11 @@ class heatbath():
         self.Q=np.zeros(len(self.timesteps))
         self.P=np.zeros(len(self.timesteps))
 
-        self.q=self.y0[2:self.N+2]
+        self.q=self.y0[1:self.N+1]
         self.p=self.y0[self.N+2:2*self.N+2]
         self.Q[0]=self.y0[0]
-        self.P[0]=self.y0[1]
+        self.P[0]=self.y0[self.N+1]
+        print(self.P[0])
 
         self.energy[0]=self.initialEnergy
         self.momentum[0]=np.sum(self.p)+self.P[0]

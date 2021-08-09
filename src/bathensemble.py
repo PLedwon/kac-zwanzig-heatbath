@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import csv
 from cmath import *
 from heatbath import *
 
@@ -25,7 +26,7 @@ class bathensemble():
         self.K_N=np.zeros(self.timesteps.size) # memory kernel value at every timestep
         self.K = np.zeros(self.timesteps.size)
         self.singleBathK_N = np.zeros(self.timesteps.size)
-        
+
 
 
         self.aveQ=np.zeros(self.timesteps.size)
@@ -47,7 +48,7 @@ class bathensemble():
     def simulateSingleBath(self):
 
         omega =np.linspace(self.omega_min,self.omega_max,num=self.N)
-#        omega =np.random.uniform(self.omega_min,self.omega_max,self.N) 
+#        omega =np.random.uniform(self.omega_min,self.omega_max,self.N)
         self.omega=omega
 
         masses = self.computeMasses(omega)
@@ -56,13 +57,36 @@ class bathensemble():
         #fig=plt.figure(3)
         #plt.hist(k,200)
 
+
+
         #generate starting positions/impulses for oscillators
-        q0 = self.Q0 + np.power(self.beta,-0.5)*np.multiply(np.power(k,-0.5),np.random.standard_normal(self.N))
-        p0 = np.power(self.beta,-0.5)*np.multiply(np.power(masses,0.5),np.random.standard_normal(self.N))
-        p0 -= np.average(p0)-1/float(self.N)*self.P0
+#        q0 = self.Q0 + np.power(self.beta,-0.5)*np.multiply(np.power(k,-0.5),np.random.standard_normal(self.N))
+#        p0 = np.power(self.beta,-0.5)*np.multiply(np.power(masses,0.5),np.random.standard_normal(self.N))
+#        p0 -= np.average(p0)-1/float(self.N)*self.P0
+
+        #load initial Conditions from file
+        q0 = []
+        with open('../../initialConditions/initialPositions.csv', 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                q0.append(float(row[0]))
+
+        p0 = []
+        with open('../../initialConditions/initialMomenta.csv', 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                p0.append(float(row[0]))
+
+
+        q0 = np.array(q0)
+        p0 = np.array(p0)
+        P0 = p0[0]
+        Q0 = q0[0]
 
         # cast initial values into one array
-        y0=np.hstack([self.Q0,self.P0,q0,p0])
+        #y0=np.hstack([self.Q0,self.P0,q0,p0])
+    #    y0=np.hstack([q0[0],p0[0],q0[1:self.N],p0[1:self.N]])
+        y0=np.hstack((q0,p0))
         self.singleBath = heatbath(self.N,y0,k,masses,self.M,self.t0,self.t1,self.dt)
 
        # self.singleBathK_N = np.zeros(self.timesteps.size)
@@ -77,7 +101,6 @@ class bathensemble():
         self.maxMomentumError = 0
         self.avgEnergyError = 0
         for i in range(0,self.n):
-            print(i)
             self.simulateSingleBath()
             self.aveQ += 1.0/float(self.n) *self.singleBath.Q
             self.aveP += 1.0/float(self.n) *self.singleBath.P
@@ -93,7 +116,7 @@ class bathensemble():
 
             if self.maxMomentumError<self.singleBath.maxMomentumError:
                 self.maxMomentumError=self.singleBath.maxMomentumError
-            
+
             self.energyError = self.singleBath.energyError
             self.momentumError = self.singleBath.momentumError
 
@@ -111,4 +134,4 @@ class bathensemble():
         print(self.maxMomentumError)
 
         name = str(np.floor(np.random.uniform(0,999999,1)))
-        np.savez(name, squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega, omega=self.omega,k=self.k)
+        np.savez(name, Q=self.singleBath.Q,squaredQ=self.squaredQ, squaredP=self.squaredP, aveQ=self.aveQ, aveP=self.aveP, maxEnergyError=self.maxEnergyError, maxMomentumError=self.maxMomentumError, dt=self.dt, t1=self.t1,timesteps=self.timesteps, gamma=self.gamma, avgEnergyError=self.avgEnergyError,Omega=self.Omega, omega=self.omega,k=self.k)

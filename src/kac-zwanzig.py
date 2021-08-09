@@ -10,12 +10,12 @@ import scipy
 ########################################################################################################################
 #set parameters
 n=1#ensemble of baths that we average over
-N=20000 #number of bath oscillators
-beta=0.1 #1\kB*T
-M=0.001# mass of the distinguished particle
+N=2 #number of bath oscillators
+beta=1.0 #1\kB*T
+M=np.power(10.0,-2)# mass of the distinguished particle
 Q0=0 #starting pos/impulse of distinguished particle
 P0=np.power(beta,-0.5)*np.power(M,0.5)*np.random.standard_normal(1)
-oscMass=1.0 #1.0 #mass of heaviest bath oscillator
+oscMass=np.power(10.0,2) #1.0 #mass of heaviest bath oscillator
 #masses=m*np.ones(N)
 t0=0.0
 t1=np.power(10.0,0.0)
@@ -38,4 +38,4 @@ print(startstr)
 
 ensemble1 = bathensemble(n,N,beta,Q0,P0,oscMass,M,t0,t1,dt,gamma,diffType,Omega,omega_min,omega_max)
 ensemble1.averageEnsemble()
-
+print(ensemble1.singleBath.Q)

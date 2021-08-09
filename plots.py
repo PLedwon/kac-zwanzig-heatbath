@@ -7,32 +7,32 @@ import scipy
 from scipy.optimize import curve_fit
 
 Omega=1.0
-#errorbarCount = 100
+errorbarCount = 100
 
 if not glob.glob('../data/*.npz'):
 
-    resultList = glob.glob('/users/stud/ledwon/Documents/npzFiles/*.np[yz]')
-    
+#    resultList = glob.glob('/users/stud/ledwon/Documents/npzFiles/*.np[yz]')
+    resultList=glob.glob('/users/stud/ledwon/Documents/kac-zwanzig-heatbath/src/*.npz')
     data=np.load(resultList[0])
-    Q=np.zeros(np.size(data['Q']))
-    P=np.zeros(np.size(data['P']))
+    Q=data['Q']
+#    P=np.zeros(np.size(data['P']))
 
-#    aveQ=np.zeros(np.size(data['aveQ']))
+    aveQ=np.zeros(np.size(data['aveQ']))
  #   aveP=np.zeros(np.size(data['aveP']))
 
     #K=np.zeros(np.size(data['K']))
     timesteps=data['timesteps']
     t1=data['t1']
     dt=data['dt']
-#    gamma=data['gamma']
+    gamma=data['gamma']
 #    Omega=data['Omega']
-#   k=data['k']
-#    omega=data['omega']
+    k=data['k']
+    omega=data['omega']
     maxEError=0
     errorFileCount=0
 
     avgEnergyError=data['avgEnergyError']
-    avgMomentumError=data['avgMomentumError']
+#    avgMomentumError=data['avgMomentumError']
 #    momentumError=data['momentumError']
     
     
@@ -52,6 +52,7 @@ if not glob.glob('../data/*.npz'):
     
     stdMat = np.zeros((len(timeToIndexArray),len(resultList)))
     stdMatK = np.zeros((len(timeToIndexArray),len(resultList)))
+    varQ=np.zeros(np.size(data['aveQ']))
     i=0
     for file in resultList:
             results = np.load(file)
@@ -59,7 +60,7 @@ if not glob.glob('../data/*.npz'):
     #        stdMatK[:,i] = results['K'][timeToIndexArray] 
     
             varQ += results['squaredQ'] - results['aveQ'] #not normalized yet
-            varP += results['squaredP'] - results['aveP']
+#            varP += results['squaredP'] - results['aveP']
     #        K    += results['K']
             print(results['maxEnergyError'])
             i+=1
@@ -72,12 +73,15 @@ if not glob.glob('../data/*.npz'):
     #K=moving_average(K,1000)    
     norm=1.0/(float(len(resultList)))
     varQ *= norm
-    varP *= norm
+#    varP *= norm
     std  *= norm
 #    stdK  *= norm
 
-    np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, varP=varP, t1=t1, dt=dt, gamma=gamma,k=k,omega=omega)
+   # np.savez("../data/data", varQ=varQ, timesteps=timesteps, std=std, t1=t1, dt=dt, gamma=gamma,k=k,omega=omega)
 
+    trajectory = plt.figure(7)
+    plt.plot(Q)
+    trajectory.savefig("./img/trajectory.pdf")
 
 else: 
     
@@ -208,6 +212,11 @@ plt.xlabel('t')
 plt.ylabel('Memory Kernel')
 plt.legend()
 kernelLin.savefig("./img/KLin.pdf",bbox_inches='tight')
+
+
+
+
+
 
 
 #energy = plt.figure(5)
